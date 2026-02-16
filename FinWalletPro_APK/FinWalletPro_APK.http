@@ -1,0 +1,6 @@
+@FinWalletPro_APK_HostAddress = http://localhost:5272
+
+GET {{FinWalletPro_APK_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
