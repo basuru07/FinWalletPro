@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinWalletPro_APK", "FinWalletPro_APK.csproj", "{9C627903-CC0E-49E4-87AC-C3B7B26CC43B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C627903-CC0E-49E4-87AC-C3B7B26CC43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C627903-CC0E-49E4-87AC-C3B7B26CC43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C627903-CC0E-49E4-87AC-C3B7B26CC43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C627903-CC0E-49E4-87AC-C3B7B26CC43B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8F465C7-29A3-4107-B709-28D8A489F270}
+	EndGlobalSection
+EndGlobal
