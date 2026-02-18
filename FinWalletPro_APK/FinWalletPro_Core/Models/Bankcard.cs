@@ -1,6 +1,6 @@
 ﻿namespace FinWalletPro_APK.FinWalletPro_Core.Models
 {
-    public class Bankcard
+    public class BankCard
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
@@ -15,10 +15,13 @@
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdateAt { get; set; }
 
+        
         // Navigation Properties
         public virtual User User { get; set; }
 
-        public Bankcard()
+        
+        // BankCard Constructor
+        public BankCard()
         {
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
@@ -39,6 +42,7 @@
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
+        
         // Navigation Properties
         public virtual User User { get; set; }
 

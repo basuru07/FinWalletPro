@@ -1,4 +1,6 @@
 ﻿using System.Transactions;
+using static FinWalletPro_APK.FinWalletPro_Core.Models.Domainenums;
+using TransactionStatus = FinWalletPro_APK.FinWalletPro_Core.Models.Domainenums.TransactionStatus;
 
 namespace FinWalletPro_APK.FinWalletPro_Core.Models
 {
@@ -38,8 +40,8 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Models
             Currency = "USD";
         }
 
-        // Generate Reference
-        private string GenerateReference()
+        // Generate Reference [TXN][DATE][TIME][first 8 guid] -> TXN 20260217 044512 3F2504E0
+        private static string GenerateReference()
         {
             return $"TXN{DateTime.UtcNow:yyyyMMddHHmmss}{Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper()}";
         }

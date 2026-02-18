@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using static FinWalletPro_APK.FinWalletPro_Core.Models.Domainenums;
 
 namespace FinWalletPro_APK.FinWalletPro_Core.Models
 {
@@ -19,6 +20,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Models
         public virtual ICollection<Transaction> OutgoingTransactions { get; set; }
         public virtual ICollection<Transaction> IncomingTransaction { get; set; }
 
+        // Wallet Constructor
         public Wallet()
         {
             Id = Guid.NewGuid();
@@ -32,7 +34,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Models
 
         }
 
-        // Credit
+        // Credit -> add money to wallet
         public void Credit(decimal amount)
 
         {
@@ -41,13 +43,13 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Models
             UpdateAt = DateTime.UtcNow;
         }
 
-        // Can Debit
+        // Can Debit -> check if wallet can withdraw money
         public bool CanDebit(decimal amount)
         {
             return AvailableBalance >= amount && Status == WalletStatus.Active;
         }
 
-        // Debit
+        // Debit -> remove money 
         public void Debit(decimal amount)
         {
             if (!CanDebit(amount))

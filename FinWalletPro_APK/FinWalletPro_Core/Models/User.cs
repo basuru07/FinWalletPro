@@ -22,7 +22,7 @@
 
         public User()
         {
-            Id = Guid.NetGuid();
+            Id = Guid.NewGuid();
             CreateAt = DateTime.UtcNow;
             IsActive = true;
             BankCards = new HashSet<BankCard>();
