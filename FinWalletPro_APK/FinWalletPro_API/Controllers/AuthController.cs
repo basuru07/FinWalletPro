@@ -1,7 +1,6 @@
-﻿using FinWalletPro_APK.FinWalletPro_API.DTOs;
-using FinWalletPro_APK.FinWalletPro_Core.Interface;
+﻿using FinWalletPro_APK.FinWalletPro_Core.Interface;
 using FinWalletPro_APK.FinWalletPro_Core.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinWalletPro_APK.FinWalletPro_API.Controllers
@@ -10,59 +9,35 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
+        public AuthController(IAccountService accountService) => _accountService = accountService;
 
-        public AuthController(IUserService userService)
+        [HttpPost("signup")]
+        public async Task<IActionResult> SignUp(RegisterRequest request)
         {
-            _userService = userService;
-        }
-
-        // POST api/auth/register
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var command = new RegisterRequest
+            var account = new Account
             {
                 Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber,
-                Password = request.Password
+                FullName = request.FullName,
+                PhoneNumber = request.PhoneNumber
             };
-
-            var result = await _userService.RegisterAsync(command);
-            return result.Success ? Ok(result) : BadRequest(result);
+            var created = await _accountService.RegisterAsync(account, request.Password);
+            return Ok(new { created.AccountId, created.Email, created.FullName });
         }
 
-        // POST api/auth/login
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn(LoginRequest request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var token = await _accountService.AuthenticateAsync(request.Email, request.Password);
+            if (token == null) return Unauthorized("Invalid credentials");
 
-            var loginRequest = new LoginRequest
+            var account = await _accountService.GetByEmailAsync(request.Email);
+            return Ok(new AuthResponse
             {
-                Email = request.Email,
-                Password = request.Password
-            };
-
-            var result = await _userService.LoginAsync(loginRequest);
-            return result.Success ? Ok(result) : Unauthorized(result);
-        }
-
-        // POST api/auth/logout
-        [HttpPost("logout")]
-        [Authorize]
-        public IActionResult Logout()
-        {
-            // JWT is stateless — client drops the token
-            return Ok(new { message = "Logged out successfully" });
+                Token = token,
+                Email = account!.Email,
+                FullName = account.FullName
+            });
         }
     }
 }
