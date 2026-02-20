@@ -1,32 +1,60 @@
 ﻿using FinWalletPro_APK.FinWalletPro_Core.Interface;
 using FinWalletPro_APK.FinWalletPro_Core.Models;
+using FinWalletPro_APK.FinWalletPro_Infrastructure.Repositories;
 
 namespace FinWalletPro_APK.FinWalletPro_Core.Services
 {
     public class BeneficiaryService : IBeneficiaryService
     {
-        private readonly BeneficiaryRepository _repo;
+        private readonly IBeneficiaryRepository _beneficiaryRepository;
 
-        public BeneficiaryService(BeneficiaryRepository repo)
+        public BeneficiaryService(IBeneficiaryRepository beneficiaryRepository)
         {
-            _repo = repo;
+            _beneficiaryRepository = beneficiaryRepository;
         }
 
-        public async Task AddBeneficiaryAsync(int accountId, string name, string bankAccountNumber)
+        public async Task<Beneficiary> AddBeneficiaryAsync(Beneficiary beneficiary)
         {
-            var beneficiary = new Beneficiary
-            {
-                AccountId = accountId,
-                Name = name,
-                BankAccountNumber = bankAccountNumber
-            };
+            var exists = await BeneficiaryExistsAsync(beneficiary.AccountId, beneficiary.BeneficiaryAccountNumber);
+            if (exists)
+                throw new InvalidOperationException("This beneficiary is already added.");
 
-            await _repo.AddAsync(beneficiary);
+            beneficiary.CreatedAt = DateTime.UtcNow;
+            beneficiary.UpdatedAt = DateTime.UtcNow;
+            beneficiary.IsActive = true;
+            return await _beneficiaryRepository.CreateAsync(beneficiary);
         }
 
-        public async Task<IEnumerable<Beneficiary>> GetBeneficiariesAsync(int accountId)
+        public async Task<IEnumerable<Beneficiary>> GetBeneficiariesAsync(long accountId)
+            => await _beneficiaryRepository.GetByAccountIdAsync(accountId);
+
+        public async Task<Beneficiary> GetBeneficiaryByIdAsync(long beneficiaryId)
         {
-            return await _repo.GetByAccountIdAsync(accountId);
+            var b = await _beneficiaryRepository.GetByIdAsync(beneficiaryId);
+            if (b == null) throw new KeyNotFoundException("Beneficiary not found.");
+            return b;
         }
+
+        public async Task<Beneficiary> UpdateBeneficiaryAsync(long beneficiaryId, Beneficiary updated)
+        {
+            var beneficiary = await GetBeneficiaryByIdAsync(beneficiaryId);
+            beneficiary.NickName = updated.NickName ?? beneficiary.NickName;
+            beneficiary.BeneficiaryName = updated.BeneficiaryName ?? beneficiary.BeneficiaryName;
+            beneficiary.BeneficiaryPhone = updated.BeneficiaryPhone ?? beneficiary.BeneficiaryPhone;
+            beneficiary.BankName = updated.BankName ?? beneficiary.BankName;
+            beneficiary.UpdatedAt = DateTime.UtcNow;
+            return await _beneficiaryRepository.UpdateAsync(beneficiary);
+        }
+
+        public async Task<bool> RemoveBeneficiaryAsync(long accountId, long beneficiaryId)
+        {
+            var beneficiary = await GetBeneficiaryByIdAsync(beneficiaryId);
+            if (beneficiary.AccountId != accountId)
+                throw new UnauthorizedAccessException("You don't own this beneficiary.");
+            return await _beneficiaryRepository.DeleteAsync(beneficiaryId);
+        }
+
+        public async Task<bool> BeneficiaryExistsAsync(long accountId, string accountNumber)
+            => await _beneficiaryRepository.ExistsAsync(accountId, accountNumber);
     }
 }

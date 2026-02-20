@@ -2,10 +2,18 @@
 {
     public class Notification
     {
-        public int NotificationId { get; set; }
-        public int AccountId { get; set; }
-        public string Message { get; set; } = string.Empty;
+        public long NotificationId { get; set; }
+        public long AccountId { get; set; }
+        public string? Title { get; set; }
+        public string? Message { get; set; }
+        public string? NotificationType { get; set; } // Transaction, Security, Promotional, System
         public bool IsRead { get; set; } = false;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? ReferenceId { get; set; }
+        public string? ReferenceType { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ReadAt { get; set; }
+
+        // Navigate property to Account
+        public Account? Account { get; set; }
     }
 }

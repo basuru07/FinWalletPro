@@ -1,23 +1,54 @@
-﻿namespace FinWalletPro_APK.FinWalletPro_API.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FinWalletPro_APK.FinWalletPro_API.DTOs
 {
-    public class RegisterRequest
+    // ─── Request DTOs ─────────────────────────────────────────────────────────
+    public class RegisterRequestDto
     {
-        public string Email { get; set; } = string.Empty;
-        public string FullName { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        [Required][MaxLength(200)] public string? FullName { get; set; }
+        [Required][EmailAddress][MaxLength(200)] public string? Email { get; set; }
+        [Required][MinLength(8)] public string? Password { get; set; }
+        [Required][Compare("Password")] public string? ConfirmPassword { get; set; }
+        [Phone] public string? PhoneNumber { get; set; }
     }
 
-    public class LoginRequest
+    public class LoginRequestDto
     {
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        [Required][EmailAddress] public string? Email { get; set; }
+        [Required] public string? Password { get; set; }
     }
 
-    public class AuthResponse
+    public class RefreshTokenRequestDto
     {
-        public string Token { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string FullName { get; set; } = string.Empty;
+        [Required] public string? RefreshToken { get; set; }
+    }
+
+    public class ChangePasswordRequestDto
+    {
+        [Required] public string? CurrentPassword { get; set; }
+        [Required][MinLength(8)] public string? NewPassword { get; set; }
+        [Required][Compare("NewPassword")] public string ConfirmNewPassword { get; set; }
+    }
+
+    // ─── Response DTOs ────────────────────────────────────────────────────────
+    public class AuthResponseDto
+    {
+        public string? AccessToken { get; set; }
+        public string? RefreshToken { get; set; }
+        public string TokenType { get; set; } = "Bearer";
+        public int ExpiresIn { get; set; }
+        public AccountSummaryDto Account { get; set; }
+    }
+
+    public class AccountSummaryDto
+    {
+        public long AccountId { get; set; }
+        public string? FullName { get; set; }
+        public string? Email { get; set; }
+        public string? AccountNumber { get; set; }
+        public string? PhoneNumber { get; set; }
+        public decimal Balance { get; set; }
+        public string? Currency { get; set; }
+        public string? AccountStatus { get; set; }
     }
 }
