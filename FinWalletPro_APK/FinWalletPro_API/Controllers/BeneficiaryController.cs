@@ -14,12 +14,13 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
     {
         private readonly IBeneficiaryService _beneficiaryService;
 
+        // Constructor
         public BeneficiaryController(IBeneficiaryService beneficiaryService)
         {
             _beneficiaryService = beneficiaryService;
         }
 
-        /// <summary>Get all beneficiaries for the current account</summary>
+        // Get all beneficiaries for the current account
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,7 +33,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Get a specific beneficiary</summary>
+        // Get a specific beneficiary
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
@@ -40,7 +41,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<BeneficiaryResponseDto> { Success = true, Data = MapToDto(beneficiary) });
         }
 
-        /// <summary>Add a new beneficiary</summary>
+        // Add a new beneficiary
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddBeneficiaryRequestDto dto)
         {
@@ -65,7 +66,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Update beneficiary details</summary>
+        // Update beneficiary details
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, [FromBody] UpdateBeneficiaryRequestDto dto)
         {
@@ -85,7 +86,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Remove a beneficiary</summary>
+        // Remove a beneficiary
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(long id)
         {

@@ -2,13 +2,14 @@
 
 namespace FinWalletPro_APK.FinWalletPro_API.DTOs
 {
-    // ─── Request DTOs ─────────────────────────────────────────────────────────
+    // Update_Account_RequestDto
     public class UpdateAccountRequestDto
     {
         [MaxLength(200)] public string? FullName { get; set; }
         [Phone] public string? PhoneNumber { get; set; }
     }
 
+    // Add_BankCard_RequestDto
     public class AddBankCardRequestDto
     {
         [Required][MaxLength(200)] public string? CardHolderName { get; set; }
@@ -20,7 +21,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         [MaxLength(100)] public string? BankName { get; set; }
     }
 
-    // ─── Response DTOs ────────────────────────────────────────────────────────
+    // Accounnt_DetailsDto
     public class AccountDetailDto
     {
         public long AccountId { get; set; }
@@ -35,6 +36,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         public List<BankCardDto> BankCards { get; set; }
     }
 
+    // Balance_ResponseDto
     public class BalanceResponseDto
     {
         public long AccountId { get; set; }
@@ -44,6 +46,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         public DateTime AsOf { get; set; }
     }
 
+    // BankCardDto
     public class BankCardDto
     {
         public long CardId { get; set; }

@@ -14,12 +14,13 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
     {
         private readonly ITransactionService _transactionService;
 
+        // Constructor
         public TransactionController(ITransactionService transactionService)
         {
             _transactionService = transactionService;
         }
 
-        /// <summary>Transfer money to another wallet</summary>
+        // Transfer money to another wallet
         [HttpPost("transfer")]
         public async Task<IActionResult> Transfer([FromBody] TransferRequestDto dto)
         {
@@ -35,7 +36,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Deposit money into wallet</summary>
+        // Deposit money into wallet
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] DepositRequestDto dto)
         {
@@ -50,7 +51,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Withdraw money from wallet</summary>
+        // Withdraw money from wallet
         [HttpPost("withdraw")]
         public async Task<IActionResult> Withdraw([FromBody] WithdrawRequestDto dto)
         {
@@ -65,7 +66,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Get transaction history with filtering and pagination</summary>
+        // Get transaction history with filtering and pagination
         [HttpGet("history")]
         public async Task<IActionResult> GetHistory([FromQuery] TransactionFilterRequestDto dto)
         {
@@ -96,7 +97,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Get account statement for a date range</summary>
+        // Get account statement for a date range
         [HttpGet("statement")]
         public async Task<IActionResult> GetStatement([FromQuery] StatementRequestDto dto)
         {
@@ -125,7 +126,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Get a single transaction by ID</summary>
+        // Get a single transaction by ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
@@ -133,7 +134,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<TransactionResponseDto> { Success = true, Data = MapToResponse(tx) });
         }
 
-        /// <summary>Get a single transaction by reference number</summary>
+        // Get a single transaction by reference number
         [HttpGet("reference/{reference}")]
         public async Task<IActionResult> GetByReference(string reference)
         {
@@ -141,7 +142,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<TransactionResponseDto> { Success = true, Data = MapToResponse(tx) });
         }
 
-        /// <summary>Reverse a completed transfer transaction</summary>
+        // Reverse a completed transfer transaction
         [HttpPost("{id}/reverse")]
         public async Task<IActionResult> ReverseTransaction(long id, [FromBody] ReverseTransactionRequestDto dto)
         {

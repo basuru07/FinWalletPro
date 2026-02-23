@@ -25,6 +25,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             _notificationService = notificationService;
         }
 
+        // Register 
         public async Task<Account> RegisterAsync(Account account, string password)
         {
             var existing = await _accountRepository.GetByEmailAsync(account.Email);
@@ -53,6 +54,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return created;
         }
 
+        // Login
         public async Task<(Account account, string accessToken, string refreshToken)> LoginAsync(string email, string password)
         {
             var account = await _accountRepository.GetByEmailAsync(email);
@@ -78,6 +80,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return (account, accessToken, refreshToken);
         }
 
+        // Refresh Token
         public async Task<(string accessToken, string refreshToken)> RefreshTokenAsync(string refreshToken)
         {
             var account = await _accountRepository.GetByRefreshTokenAsync(refreshToken);
@@ -95,6 +98,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return (newAccessToken, newRefreshToken);
         }
 
+        // LogOut
         public async Task<bool> LogoutAsync(long accountId)
         {
             var account = await _accountRepository.GetByIdAsync(accountId);
@@ -107,6 +111,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return true;
         }
 
+        // Get Account by ID
         public async Task<Account> GetAccountByIdAsync(long accountId)
         {
             var account = await _accountRepository.GetByIdAsync(accountId);
@@ -114,6 +119,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return account;
         }
 
+        // Get Account By Email
         public async Task<Account> GetAccountByEmailAsync(string email)
         {
             var account = await _accountRepository.GetByEmailAsync(email);
@@ -121,6 +127,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return account;
         }
 
+        // Update Account
         public async Task<Account> UpdateAccountAsync(long accountId, Account updatedAccount)
         {
             var account = await GetAccountByIdAsync(accountId);
@@ -130,6 +137,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return await _accountRepository.UpdateAsync(account);
         }
 
+        // Change Password
         public async Task<bool> ChangePasswordAsync(long accountId, string currentPassword, string newPassword)
         {
             var account = await GetAccountByIdAsync(accountId);
@@ -148,15 +156,18 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return true;
         }
 
+        // Get Balanced
         public async Task<decimal> GetBalanceAsync(long accountId)
         {
             var account = await GetAccountByIdAsync(accountId);
             return account.Balance;
         }
 
+        // Get All Account
         public async Task<IEnumerable<Account>> GetAllAccountsAsync()
             => await _accountRepository.GetAllAsync();
 
+        // Suspend Account
         public async Task<bool> SuspendAccountAsync(long accountId)
         {
             var account = await GetAccountByIdAsync(accountId);
@@ -166,6 +177,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return true;
         }
 
+        // Activate Account
         public async Task<bool> ActivateAccountAsync(long accountId)
         {
             var account = await GetAccountByIdAsync(accountId);
@@ -175,7 +187,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return true;
         }
 
-        // Bank Card Methods
+        // Add BankCard
         public async Task<BankCard> AddBankCardAsync(BankCard card)
         {
             card.LinkedAt = DateTime.UtcNow;
@@ -188,6 +200,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Services
             return await _accountRepository.AddBankCardAsync(card);
         }
 
+        // Get BankCard
         public async Task<IEnumerable<BankCard>> GetBankCardsAsync(long accountId)
             => await _accountRepository.GetBankCardsAsync(accountId);
 

@@ -15,6 +15,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
         private readonly IAccountService _accountService;
         private readonly IConfiguration _configuration;
 
+        // Constructor
         public AuthController(IAccountService accountService, IConfiguration configuration)
         {
             _accountService = accountService;
@@ -42,7 +43,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Login and obtain JWT tokens</summary>
+        // Login and obtain JWT tokens
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto dto)
         {
@@ -63,7 +64,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Refresh expired access token</summary>
+        // Refresh expired access token
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto dto)
         {
@@ -78,7 +79,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Logout and invalidate refresh token</summary>
+        // Logout and invalidate refresh token
         [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
@@ -88,7 +89,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<object> { Success = true, Message = "Logged out successfully." });
         }
 
-        /// <summary>Change account password</summary>
+        // Change account password
         [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDto dto)

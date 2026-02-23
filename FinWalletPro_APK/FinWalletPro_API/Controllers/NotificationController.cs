@@ -18,7 +18,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             _notificationService = notificationService;
         }
 
-        /// <summary>Get all notifications (optionally filter unread only)</summary>
+        // Get all notifications (optionally filter unread only)
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] bool unreadOnly = false)
         {
@@ -42,7 +42,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Get count of unread notifications</summary>
+        // Get count of unread notifications
         [HttpGet("unread-count")]
         public async Task<IActionResult> GetUnreadCount()
         {
@@ -55,7 +55,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Mark a notification as read</summary>
+        // Mark a notification as read
         [HttpPatch("{id}/read")]
         public async Task<IActionResult> MarkAsRead(long id)
         {
@@ -64,7 +64,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<object> { Success = true, Message = "Notification marked as read." });
         }
 
-        /// <summary>Mark all notifications as read</summary>
+        // Mark all notifications as read
         [HttpPatch("read-all")]
         public async Task<IActionResult> MarkAllAsRead()
         {
@@ -73,7 +73,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<object> { Success = true, Message = "All notifications marked as read." });
         }
 
-        /// <summary>Delete a notification</summary>
+        // Delete a notification
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
