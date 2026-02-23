@@ -113,9 +113,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
 var app = builder.Build();
-// ─────────────────────────────────────────────────────────────────────────────
 
 // Auto-migrate on startup
 using (var scope = app.Services.CreateScope())
@@ -127,12 +125,12 @@ using (var scope = app.Services.CreateScope())
 // Middleware Pipeline
 app.UseMiddleware<ExceptionMiddleware>();
 
-// ✅ Swagger always available (not locked to Development only)
+// Swagger always available (not locked to Development only)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinWalletPro API v1");
-    c.RoutePrefix = "swagger"; // ✅ Now accessible at https://localhost:7109/swagger
+    c.RoutePrefix = "swagger"; // Now accessible at https://localhost:7109/swagger
 });
 
 app.UseHttpsRedirection();
@@ -143,4 +141,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Run(); // ✅ Only one Run() — nothing after this
+app.Run(); 

@@ -16,12 +16,13 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
     {
         private readonly IAccountService _accountService;
 
+        // Constructor 
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
 
-        /// <summary>Get the authenticated user's account details</summary>
+        // Get the authenticated user's account details
         [HttpGet("me")]
         public async Task<IActionResult> GetMyAccount()
         {
@@ -30,7 +31,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<AccountDetailDto> { Success = true, Data = MapToDetail(account) });
         }
 
-        /// <summary>Get current balance</summary>
+        // Get current balance
         [HttpGet("balance")]
         public async Task<IActionResult> GetBalance()
         {
@@ -50,7 +51,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Update account profile</summary>
+        // Update account profile
         [HttpPut("me")]
         public async Task<IActionResult> UpdateAccount([FromBody] UpdateAccountRequestDto dto)
         {
@@ -70,7 +71,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
 
         // ─── Bank Cards ───────────────────────────────────────────────────────
 
-        /// <summary>Link a new bank card to the account</summary>
+        // Link a new bank card to the account
         [HttpPost("cards")]
         public async Task<IActionResult> AddBankCard([FromBody] AddBankCardRequestDto dto)
         {
@@ -103,7 +104,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Get all linked bank cards</summary>
+        // Get all linked bank cards
         [HttpGet("cards")]
         public async Task<IActionResult> GetBankCards()
         {
@@ -116,7 +117,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             });
         }
 
-        /// <summary>Remove a linked bank card</summary>
+        // Remove a linked bank card
         [HttpDelete("cards/{cardId}")]
         public async Task<IActionResult> RemoveBankCard(long cardId)
         {
@@ -126,7 +127,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
             return Ok(new ApiResponse<object> { Success = true, Message = "Card removed successfully." });
         }
 
-        /// <summary>Set a card as the default payment method</summary>
+        // Set a card as the default payment method
         [HttpPatch("cards/{cardId}/set-default")]
         public async Task<IActionResult> SetDefaultCard(long cardId)
         {

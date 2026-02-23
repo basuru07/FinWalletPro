@@ -2,7 +2,7 @@
 
 namespace FinWalletPro_APK.FinWalletPro_API.DTOs
 {
-    // ─── Request DTOs ─────────────────────────────────────────────────────────
+    // Transfer_RequestDto
     public class TransferRequestDto
     {
         [Required] public string? ReceiverAccountNumber { get; set; }
@@ -13,18 +13,21 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         [MaxLength(100)] public string? Category { get; set; }
     }
 
+    // Deposit_RequestDto
     public class DepositRequestDto
     {
         [Required][Range(0.01, double.MaxValue)] public decimal Amount { get; set; }
         [MaxLength(500)] public string? Description { get; set; }
     }
 
+    // Withdraw_RequestDto
     public class WithdrawRequestDto
     {
         [Required][Range(0.01, double.MaxValue)] public decimal Amount { get; set; }
         [MaxLength(500)] public string? Description { get; set; }
     }
 
+    // Transaction_Filter_RequestDto
     public class TransactionFilterRequestDto
     {
         public DateTime? FromDate { get; set; }
@@ -38,12 +41,14 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         public int PageSize { get; set; } = 20;
     }
 
+    // Statement_RequestDto
     public class StatementRequestDto
     {
         [Required] public DateTime FromDate { get; set; }
         [Required] public DateTime ToDate { get; set; }
     }
 
+    // Reverse_Transaction_RequestDto
     public class ReverseTransactionRequestDto
     {
         [Required][MaxLength(500)] public string? Reason { get; set; }

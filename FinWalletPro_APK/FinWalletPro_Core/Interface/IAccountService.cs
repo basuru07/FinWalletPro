@@ -17,6 +17,7 @@ namespace FinWalletPro_APK.FinWalletPro_Core.Interface
         Task<bool> SuspendAccountAsync(long accountId);
         Task<bool> ActivateAccountAsync(long accountId);
 
+        
         // Bank Card
         Task<BankCard> AddBankCardAsync(BankCard card);
         Task<IEnumerable<BankCard>> GetBankCardsAsync(long accountId);

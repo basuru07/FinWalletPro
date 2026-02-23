@@ -2,7 +2,7 @@
 
 namespace FinWalletPro_APK.FinWalletPro_API.DTOs
 {
-    // ─── Request DTOs ─────────────────────────────────────────────────────────
+    // Register_RequestDto
     public class RegisterRequestDto
     {
         [Required][MaxLength(200)] public string? FullName { get; set; }
@@ -12,17 +12,20 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         [Phone] public string? PhoneNumber { get; set; }
     }
 
+    // Login_RequestDto
     public class LoginRequestDto
     {
         [Required][EmailAddress] public string? Email { get; set; }
         [Required] public string? Password { get; set; }
     }
 
+    // Refresh_Token_RequestDto
     public class RefreshTokenRequestDto
     {
         [Required] public string? RefreshToken { get; set; }
     }
 
+    // Change_Password_RequestDto
     public class ChangePasswordRequestDto
     {
         [Required] public string? CurrentPassword { get; set; }
@@ -30,7 +33,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         [Required][Compare("NewPassword")] public string ConfirmNewPassword { get; set; }
     }
 
-    // ─── Response DTOs ────────────────────────────────────────────────────────
+    // Auth_ResponseDto
     public class AuthResponseDto
     {
         public string? AccessToken { get; set; }
@@ -40,6 +43,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         public AccountSummaryDto Account { get; set; }
     }
 
+    // Account_SummaryDto
     public class AccountSummaryDto
     {
         public long AccountId { get; set; }

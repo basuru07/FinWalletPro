@@ -2,6 +2,7 @@
 
 namespace FinWalletPro_APK.FinWalletPro_API.DTOs
 {
+    // Add_Beneficiary_RequestDto
     public class AddBeneficiaryRequestDto
     {
         [Required][MaxLength(200)] public string? BeneficiaryName { get; set; }
@@ -12,6 +13,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         [MaxLength(100)] public string? BankName { get; set; }
     }
 
+    // Update_Beneficiary_RequestDto
     public class UpdateBeneficiaryRequestDto
     {
         [MaxLength(100)] public string? NickName { get; set; }
@@ -20,6 +22,7 @@ namespace FinWalletPro_APK.FinWalletPro_API.DTOs
         [MaxLength(100)] public string? BankName { get; set; }
     }
 
+    // Beneficiary_ResponseDto
     public class BeneficiaryResponseDto
     {
         public long BeneficiaryId { get; set; }
