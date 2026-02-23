@@ -1,5 +1,4 @@
-﻿using Braintree;
-using FinWalletPro_APK.FinWalletPro_API.DTOs;
+﻿using FinWalletPro_APK.FinWalletPro_API.DTOs;
 using FinWalletPro_APK.FinWalletPro_Core.Interface;
 using FinWalletPro_APK.FinWalletPro_Core.Models;
 using Microsoft.AspNetCore.Authorization;

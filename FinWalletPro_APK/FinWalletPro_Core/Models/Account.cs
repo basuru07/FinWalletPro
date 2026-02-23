@@ -2,7 +2,7 @@
 {
     public class Account
     {
-        public int AccountId { get; set; }
+        public long AccountId { get; set; }
         public string UserId { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
@@ -19,10 +19,10 @@
 
 
         // Interface classes
-        public ICollection<BankCard> BankCards { get; set; }
-        public ICollection<Transaction> SentTransactions { get; set; }
-        public ICollection<Transaction> ReceivedTransactions { get; set; }
-        public ICollection<Transaction> Beneficiaries { get; set; }
-        public ICollection<Transaction> Notifications { get; set; }
+        public ICollection<BankCard> BankCards { get; set; } = new List<BankCard>();
+        public ICollection<Transaction>? SentTransactions { get; set; } 
+        public ICollection<Transaction>? ReceivedTransactions { get; set; }
+        public ICollection<Beneficiary>? Beneficiaries { get; set; }
+        public ICollection<Notification?> Notifications { get; set; }
     }
 }

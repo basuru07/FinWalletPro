@@ -13,7 +13,6 @@ namespace FinWalletPro_APK.FinWalletPro_Infrastructure.Repositories
         Task<IEnumerable<Transaction>> GetStatementAsync(long accountId, DateTime from, DateTime to);
         Task<decimal> GetTotalSentAsync(long accountId, DateTime from, DateTime to);
         Task<decimal> GetTotalReceivedAsync(long accountId, DateTime from, DateTime to);
-        Task<IEnumerable<Transaction>> GetByAccountIdAsync(long accountId, TransactionFilter filter);
-        Task<IEnumerable<Transaction>> GetByAccountIdAsync(long accountId, TransactionFilter filter);
+       
     }
 }
