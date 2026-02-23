@@ -7,16 +7,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Octopus.Client.Repositories;
 using System.Text;
 using IAccountRepository = FinWalletPro_APK.FinWalletPro_Infrastructure.Repositories.IAccountRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Database 
+// Database
 builder.Services.AddDbContext<WalletDbContext>(options =>
-     options.UseOracle(
-         builder.Configuration.GetConnectionString("OracleDb")));
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
 
 // Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -25,7 +23,7 @@ builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 // Services
-builder.Services.AddScoped<INotificationService, NotificationService>();   // Register first (AccountService depends on it)
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IBeneficiaryService, BeneficiaryService>();
@@ -78,7 +76,10 @@ builder.Services.AddControllers()
             System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
 
-// ─── Swagger / OpenAPI ────────────────────────────────────────────────────────
+// Health Checks
+builder.Services.AddHealthChecks();
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -90,7 +91,6 @@ builder.Services.AddSwaggerGen(c =>
         Contact = new OpenApiContact { Name = "FinWalletPro", Email = "support@finwalletpro.com" }
     });
 
-    // Add JWT support in Swagger UI
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -117,25 +117,23 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Auto-migrate database on startup
+// Auto-migrate on startup
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<WalletDbContext>();
     await db.Database.MigrateAsync();
 }
 
-// ─── Middleware Pipeline ──────────────────────────────────────────────────────
+// Middleware Pipeline
 app.UseMiddleware<ExceptionMiddleware>();
 
-if (app.Environment.IsDevelopment())
+// ✅ Swagger always available (not locked to Development only)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinWalletPro API v1");
-        c.RoutePrefix = string.Empty;   // Swagger at root
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinWalletPro API v1");
+    c.RoutePrefix = "swagger"; // ✅ Now accessible at https://localhost:7109/swagger
+});
 
 app.UseHttpsRedirection();
 app.UseCors("FinWalletCors");
@@ -145,19 +143,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Run();
-
-app.UseSwagger();
-app.UseSwaggerUI();
-app.UseMiddleware<ExceptionMiddleware>();
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-app.Run();
-
-
-
-app.Run();
+app.Run(); // ✅ Only one Run() — nothing after this

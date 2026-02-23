@@ -1,7 +1,6 @@
 ﻿using FinWalletPro_APK.FinWalletPro_Core.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using System.Reflection.Emit;
+using Oracle.EntityFrameworkCore.Metadata;
 
 namespace FinWalletPro_APK.FinWalletPro_Infrastructure
 {
@@ -28,7 +27,7 @@ namespace FinWalletPro_APK.FinWalletPro_Infrastructure
                       .HasColumnName("ACCOUNT_ID")
                       .ValueGeneratedOnAdd()
                       .HasAnnotation("Oracle:ValueGenerationStrategy",
-                                     Oracle.EntityFrameworkCore.ValueGeneration.OracleValueGenerationStrategy.SequenceTrigger);
+                                     OracleValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.UserId).HasColumnName("USER_ID").HasMaxLength(50).IsRequired();
                 entity.Property(e => e.FullName).HasColumnName("FULL_NAME").HasMaxLength(200).IsRequired();
@@ -56,7 +55,7 @@ namespace FinWalletPro_APK.FinWalletPro_Infrastructure
                       .HasColumnName("TRANSACTION_ID")
                       .ValueGeneratedOnAdd()
                       .HasAnnotation("Oracle:ValueGenerationStrategy",
-                                     Oracle.EntityFrameworkCore.ValueGeneration.OracleValueGenerationStrategy.SequenceTrigger);
+                                     OracleValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.TransactionReference).HasColumnName("TRANSACTION_REFERENCE").HasMaxLength(50).IsRequired();
                 entity.HasIndex(e => e.TransactionReference).IsUnique();
@@ -94,7 +93,7 @@ namespace FinWalletPro_APK.FinWalletPro_Infrastructure
                       .HasColumnName("BENEFICIARY_ID")
                       .ValueGeneratedOnAdd()
                       .HasAnnotation("Oracle:ValueGenerationStrategy",
-                                     Oracle.EntityFrameworkCore.ValueGeneration.OracleValueGenerationStrategy.SequenceTrigger);
+                                     OracleValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.AccountId).HasColumnName("ACCOUNT_ID");
                 entity.Property(e => e.NickName).HasColumnName("NICK_NAME").HasMaxLength(100);
@@ -122,7 +121,7 @@ namespace FinWalletPro_APK.FinWalletPro_Infrastructure
                       .HasColumnName("NOTIFICATION_ID")
                       .ValueGeneratedOnAdd()
                       .HasAnnotation("Oracle:ValueGenerationStrategy",
-                                     Oracle.EntityFrameworkCore.ValueGeneration.OracleValueGenerationStrategy.SequenceTrigger);
+                                     OracleValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.AccountId).HasColumnName("ACCOUNT_ID");
                 entity.Property(e => e.Title).HasColumnName("TITLE").HasMaxLength(200).IsRequired();
@@ -149,7 +148,7 @@ namespace FinWalletPro_APK.FinWalletPro_Infrastructure
                       .HasColumnName("CARD_ID")
                       .ValueGeneratedOnAdd()
                       .HasAnnotation("Oracle:ValueGenerationStrategy",
-                                     Oracle.EntityFrameworkCore.ValueGeneration.OracleValueGenerationStrategy.SequenceTrigger);
+                                     OracleValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.AccountId).HasColumnName("ACCOUNT_ID");
                 entity.Property(e => e.CardHolderName).HasColumnName("CARD_HOLDER_NAME").HasMaxLength(200).IsRequired();
