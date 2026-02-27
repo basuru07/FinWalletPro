@@ -1,0 +1,92 @@
+<div class="shell">
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-logo">
+      <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="10" fill="#E8B84B" />
+        <path d="M10 22L18 10L26 22H10Z" fill="#0D1220" />
+        <circle cx="18" cy="24" r="3" fill="#0D1220" />
+      </svg>
+      <span>FinWalletPro</span>
+    </div>
+
+    <div class="sidebar-balance">
+      <span class="balance-label">Total Balance</span>
+      <span class="balance-amount">
+        {{ user?.currency || 'USD' }} {{ user?.balance | number: '1.2-2' }}
+      </span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <p class="nav-section-label">Main</p>
+      <a
+        *ngFor="let item of navMain"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeSidebar()"
+      >
+        <span class="nav-icon">{{ item.icon }}</span>
+        <span>{{ item.label }}</span>
+      </a>
+
+      <p class="nav-section-label" style="margin-top: 16px">Finance</p>
+      <a
+        *ngFor="let item of navFinance"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeSidebar()"
+      >
+        <span class="nav-icon">{{ item.icon }}</span>
+        <span>{{ item.label }}</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a
+        routerLink="/profile"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeSidebar()"
+      >
+        <div class="user-avatar">{{ initials }}</div>
+        <div class="user-info">
+          <span class="user-name">{{ user?.fullName }}</span>
+          <span class="user-email">{{ user?.email }}</span>
+        </div>
+      </a>
+      <button class="btn-icon logout-btn" (click)="logout()" title="Logout">
+        ⏻
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div
+    *ngIf="sidebarOpen"
+    class="sidebar-overlay"
+    (click)="closeSidebar()"
+  ></div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <header class="top-header">
+      <button class="btn-icon hamburger" (click)="toggleSidebar()">☰</button>
+      <div class="header-right">
+        <a routerLink="/notifications" class="notif-btn" title="Notifications">
+          🔔
+          <span *ngIf="unreadCount > 0" class="notif-badge">
+            {{ unreadCount > 9 ? '9+' : unreadCount }}
+          </span>
+        </a>
+        <a routerLink="/transfer" class="btn btn-primary btn-sm">
+          ↑ Send Money
+        </a>
+      </div>
+    </header>
+
+    <div class="page-scroll">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

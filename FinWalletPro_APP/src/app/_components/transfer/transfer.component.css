@@ -1,0 +1,294 @@
+/* ---------------- Page Wrapper ---------------- */
+.page-enter {
+  padding: 20px;
+  font-family: 'DM Sans', sans-serif;
+  background-color: #f5f5f7;
+  min-height: 100vh;
+}
+
+.back-link {
+  margin-bottom: 20px;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #6c6f8c;
+  margin: 4px 0 0 0;
+}
+
+/* ---------------- Transfer Grid ---------------- */
+.transfer-grid {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* ---------------- Form Card ---------------- */
+.transfer-form {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-elevated {
+  border-radius: 18px;
+  background-color: #fff;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+  color: #3c3c50;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d1d6;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+.form-error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.amount-input-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.currency-prefix {
+  padding: 10px 12px;
+  background: #f3f3f5;
+  border: 1px solid #d1d1d6;
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  font-weight: 500;
+}
+
+.amount-input {
+  flex: 1;
+  border-radius: 0 10px 10px 0;
+}
+
+/* ---------------- Beneficiary Chips ---------------- */
+.quick-bens {
+  margin-bottom: 20px;
+}
+
+.quick-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.ben-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ben-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #f3f3f5;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.ben-chip.selected {
+  background-color: #4f46e5;
+  color: #fff;
+}
+
+.ben-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #c5c5d1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* ---------------- Balance Info ---------------- */
+.balance-info {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.balance-info-val {
+  color: #4f46e5;
+}
+
+/* ---------------- Buttons ---------------- */
+.btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #4f46e5;
+  color: #fff;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #4f46e5;
+  border: 1px solid #4f46e5;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-lg {
+  font-size: 16px;
+  padding: 12px 20px;
+}
+
+/* Spinner */
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #4f46e5;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  margin-right: 6px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ---------------- Info Panel ---------------- */
+.info-panel {
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card, .fee-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.info-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.info-steps .step {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.step-num {
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+/* ---------------- Success State ---------------- */
+.success-state {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 25px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.success-icon {
+  font-size: 40px;
+  color: #4f46e5;
+  margin-bottom: 12px;
+}
+
+.success-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.success-sub {
+  color: #6c6f8c;
+  margin-bottom: 20px;
+}
+
+.success-details {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.success-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.mono {
+  font-family: monospace;
+}
