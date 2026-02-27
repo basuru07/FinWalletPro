@@ -15,6 +15,12 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
+  getTransactionById(id: string) {
+    throw new Error('Method not implemented.');
+  }
+  reverseTransaction(id: any, reverseReason: string) {
+    throw new Error('Method not implemented.');
+  }
   // Backend URL
   private readonly api = `${environment.apiUrl}/transaction`;
 

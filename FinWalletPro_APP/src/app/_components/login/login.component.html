@@ -1,0 +1,79 @@
+<div class="login-page">
+  <h2 class="auth-title">Welcome Back</h2>
+  <p class="auth-sub">Sign in to your wallet account</p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+
+    <!-- Global Error -->
+    <div *ngIf="error" class="error-alert">
+      {{ error }}
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label class="form-label">Email</label>
+
+      <input
+        type="email"
+        formControlName="email"
+        class="form-control"
+        placeholder="you@gmail.com"
+        [class.error]="submitted && form.get('email')?.invalid"
+      />
+
+      <span *ngIf="submitted && form.get('email')?.errors?.['required']" class="form-error">
+        Email is required
+      </span>
+
+      <span *ngIf="submitted && form.get('email')?.errors?.['email']" class="form-error">
+        Invalid email format
+      </span>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label class="form-label">Password</label>
+
+      <div class="input-password">
+        <input
+          formControlName="password"
+          [type]="showPass ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Enter your password"
+          [class.error]="submitted && form.get('password')?.invalid"
+        />
+
+        <button
+          type="button"
+          class="eye-btn"
+          (click)="showPass = !showPass"
+        >
+          {{ showPass ? '🙈' : '👁' }}
+        </button>
+      </div>
+
+      <span *ngIf="submitted && form.get('password')?.errors?.['required']" class="form-error">
+        Password is required
+      </span>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-primary btn-block btn-lg"
+      [disabled]="loading"
+    >
+      <span *ngIf="loading" class="spinner"></span>
+      {{ loading ? 'Signing in...' : 'Sign In' }}
+    </button>
+
+  </form>
+
+  <!-- Register Link -->
+  <p class="auth-switch">
+    Don't have an account?
+    <a routerLink="/auth/register" class="link">
+      Create one
+    </a>
+  </p>
+</div>

@@ -68,10 +68,11 @@ export interface AddBankCardRequest {
 
 // ------------------------- Transaction -------------------------
 export interface Transaction {
+  id(id: any, reverseReason: string): unknown;
   transactionId: number;
   transactionReference: string;
   senderName: string;
-  senerAccountNumber: string;
+  senderAccountNumber: string;
   receiverName: string;
   receiverAccountNumber: string;
   amount: number;
@@ -82,7 +83,7 @@ export interface Transaction {
   status: string;
   description: string;
   category: string;
-  baanceAfter: number;
+  balanceAfter: number;
   transactionDate: string;
 }
 

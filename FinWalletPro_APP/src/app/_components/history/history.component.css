@@ -1,0 +1,313 @@
+/* ===============================
+   Page Header
+================================ */
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+
+/* ===============================
+   Filters Bar
+================================ */
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-label {
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #6b7280;
+}
+
+.filter-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  min-width: 140px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+
+/* ===============================
+   Transaction Table
+================================ */
+.tx-table {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.tx-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s ease;
+}
+
+.tx-row:hover {
+  background: #f8fafc;
+}
+
+.tx-row:last-child {
+  border-bottom: none;
+}
+
+
+/* ===============================
+   Icon
+================================ */
+.tx-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Icon Variants */
+.dep {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.with {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.recv {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.send {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+
+/* ===============================
+   Details
+================================ */
+.tx-details {
+  flex: 1;
+}
+
+.tx-main {
+  display: flex;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.tx-peer {
+  font-size: 14px;
+}
+
+.tx-ref {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.tx-sub {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+
+/* ===============================
+   Right Section
+================================ */
+.tx-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tx-amt {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tx-amt.pos {
+  color: #16a34a;
+}
+
+.tx-amt.neg {
+  color: #dc2626;
+}
+
+
+/* ===============================
+   Badges
+================================ */
+.badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.badge-muted {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+
+/* ===============================
+   Pagination
+================================ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.page-info {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+/* ===============================
+   Buttons
+================================ */
+.btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid #d1d5db;
+}
+
+.btn-ghost:hover {
+  background: #f3f4f6;
+}
+
+.btn-sm {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+
+/* ===============================
+   Empty State
+================================ */
+.empty-state-box {
+  text-align: center;
+  padding: 40px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+
+/* ===============================
+   Skeleton Loader
+================================ */
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f3f4f6 25%,
+    #e5e7eb 37%,
+    #f3f4f6 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0 }
+  100% { background-position: -100% 0 }
+}
+
+
+/* ===============================
+   Responsive
+================================ */
+@media (max-width: 768px) {
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tx-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tx-right {
+    text-align: left;
+    width: 100%;
+  }
+}

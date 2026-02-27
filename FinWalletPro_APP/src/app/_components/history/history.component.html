@@ -1,0 +1,73 @@
+<!-- Loading -->
+<div *ngIf="loading" class="tx-table">
+  <div class="tx-row skeleton-row" *ngFor="let n of [1,2,3,4,5,6,7,8]">
+    <div class="skeleton" style="width:40px;height:40px;border-radius:50%"></div>
+    <div class="skeleton" style="flex:1;height:16px"></div>
+    <div class="skeleton" style="width:100px;height:16px"></div>
+  </div>
+</div>
+
+<!-- Empty -->
+<div *ngIf="!loading && transactions.length === 0" class="empty-state-box">
+  <div style="font-size:3rem;margin-bottom:12px">🔍</div>
+  <p style="font-weight:600;margin-bottom:4px">No transactions found</p>
+  <p style="font-size:0.875rem;color:gray">Try adjusting your filters</p>
+</div>
+
+<!-- Data -->
+<div *ngIf="!loading && transactions.length > 0">
+
+  <div class="tx-table">
+    <a *ngFor="let tx of transactions"
+       [routerLink]="['/transactions', tx.transactionId]"
+       class="tx-row">
+
+      <div class="tx-icon" [ngClass]="iconClass(tx)">
+        {{ icon(tx) }}
+      </div>
+
+      <div class="tx-details">
+        <div class="tx-main">
+          <span class="tx-peer">{{ peer(tx) }}</span>
+          <span class="tx-ref">#{{ tx.transactionReference }}</span>
+        </div>
+
+        <div class="tx-sub">
+          <span>{{ tx.transactionType }}</span>
+          <span> · </span>
+          <span>{{ tx.transactionDate | date:'MMM d, y h:mm a' }}</span>
+          <span *ngIf="tx.category"> · {{ tx.category }}</span>
+        </div>
+      </div>
+
+      <div class="tx-right">
+        <span class="tx-amt"
+              [class.pos]="isCredited(tx)"
+              [class.neg]="!isCredited(tx)">
+          {{ isCredited(tx) ? '+' : '-' }}
+          {{ accountCurrency }}
+          {{ tx.amount | number:'1.2-2' }}
+        </span>
+
+        <span class="badge" [ngClass]="badgeClass(tx.status)">
+          {{ tx.status }}
+        </span>
+      </div>
+
+    </a>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button class="btn btn-ghost btn-sm"
+            [disabled]="page <= 1"
+            (click)="prevPage()">← Prev</button>
+
+    <span class="page-info">Page {{ page }}</span>
+
+    <button class="btn btn-ghost btn-sm"
+            [disabled]="transactions.length < pageSize"
+            (click)="nextPage()">Next →</button>
+  </div>
+
+</div>
