@@ -1,65 +1,58 @@
+import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
   HttpEvent,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../_services/AuthService';
 
-export const jwtInterceptor: HttpInterceptor = {
-  intercept: (
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<HttpEvent<any>> => {
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
 
-    // Retrive token, clone request, and add authorization header
-    const auth = inject(AuthService);
-    const router = inject(Router);
-    const token = auth.getAccessToken();
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    const token = this.auth.getAccessToken();
 
     const authReq = token
       ? req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`,
-          },
+          setHeaders: { Authorization: `Bearer ${token}` }
         })
       : req;
 
     return next.handle(authReq).pipe(
-
       catchError((err: HttpErrorResponse) => {
-        // server return 401 & not authentication request
+
         if (err.status === 401 && !req.url.includes('/auth/')) {
-          return auth.refreshToken().pipe(
+          return this.auth.refreshToken().pipe(
             switchMap(() => {
 
-              // get a new token
-              const newToken = auth.getAccessToken();
+              const newToken = this.auth.getAccessToken();
 
-              // clone original request and attact new, retry the request
               const retried = req.clone({
-                setHeaders: { Authorization: `Bearer ${newToken}` },
+                setHeaders: { Authorization: `Bearer ${newToken}` }
               });
 
-              // send HTTP request with the access token
               return next.handle(retried);
             }),
-
-            // catch the errors from the request
             catchError((refreshErr) => {
-              auth.logout();
+              this.auth.logout();
               return throwError(() => refreshErr);
-            }),
+            })
           );
         }
+
         return throwError(() => err);
-      }),
+      })
     );
-  },
-};
+  }
+}

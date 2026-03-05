@@ -3,7 +3,6 @@
   <p class="auth-sub">Join FinWalletPro TODAY - it's free</p>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
-
     <!-- Global Error -->
     <div *ngIf="error" class="error-alert">{{ error }}</div>
 
@@ -15,8 +14,16 @@
     <!-- Full Name -->
     <div class="form-group">
       <label class="form-label">Full Name</label>
-      <input formControlName="fullName" type="text" class="form-control" placeholder="John Doe">
-      <span *ngIf="submitted && form.get('fullName')?.errors?.['required']" class="form-error">
+      <input
+        formControlName="fullName"
+        type="text"
+        class="form-control"
+        placeholder="John Doe"
+      />
+      <span
+        *ngIf="submitted && form.get('fullName')?.errors?.['required']"
+        class="form-error"
+      >
         Full name is required
       </span>
     </div>
@@ -24,7 +31,12 @@
     <!-- Email -->
     <div class="form-group">
       <label class="form-label">Email</label>
-      <input formControlName="email" type="email" class="form-control" placeholder="you@gmail.com">
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        placeholder="you@gmail.com"
+      />
       <span *ngIf="submitted && form.get('email')?.invalid" class="form-error">
         Valid email is required
       </span>
@@ -33,21 +45,39 @@
     <!-- Phone -->
     <div class="form-group">
       <label class="form-label">Phone (optional)</label>
-      <input formControlName="phoneNumber" type="tel" class="form-control" placeholder="+1 234 567 8900">
+      <input
+        formControlName="phoneNumber"
+        type="tel"
+        class="form-control"
+        placeholder="+1 234 567 8900"
+      />
     </div>
 
     <!-- Password & Confirm Password -->
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Password</label>
-        <input formControlName="password" type="password" class="form-control" placeholder="Min. 8 chars">
-        <span *ngIf="submitted && form.get('password')?.errors?.['minlength']" class="form-error">
+        <input
+          formControlName="password"
+          type="password"
+          class="form-control"
+          placeholder="Min. 8 chars"
+        />
+        <span
+          *ngIf="submitted && form.get('password')?.errors?.['minlength']"
+          class="form-error"
+        >
           Min. 8 characters
         </span>
       </div>
       <div class="form-group">
         <label class="form-label">Confirm Password</label>
-        <input formControlName="confirmPassword" type="password" class="form-control" placeholder="Repeat password">
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          class="form-control"
+          placeholder="Repeat password"
+        />
         <span *ngIf="submitted && form.errors?.['mismatch']" class="form-error">
           Passwords don't match
         </span>
@@ -55,16 +85,19 @@
     </div>
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary btn-block btn-lg" [disabled]="loading">
+    <button
+      type="submit"
+      class="btn btn-primary btn-block btn-lg"
+      [disabled]="loading"
+    >
       <span *ngIf="loading" class="spinner"></span>
-      {{ loading ? 'Creating…' : 'Create Account' }}
+      {{ loading ? "Creating…" : "Create Account" }}
     </button>
 
-    <!-- SignIn Switch -->
+    <!-- Login Switch -->
     <p class="auth-switch">
       Already have an account?
-      <a routerLink="/auth/login" class="link">Sign in</a>
+      <a routerLink="/login" class="link">Sign in</a>
     </p>
-
   </form>
 </div>

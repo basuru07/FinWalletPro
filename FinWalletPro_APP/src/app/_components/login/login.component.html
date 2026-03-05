@@ -43,12 +43,13 @@
           [class.error]="submitted && form.get('password')?.invalid"
         />
 
+        <!-- Password visibility field -->
         <button
           type="button"
           class="eye-btn"
           (click)="showPass = !showPass"
         >
-          {{ showPass ? '🙈' : '👁' }}
+          {{ showPass ? '🙈' : '🙉' }}
         </button>
       </div>
 
@@ -69,10 +70,10 @@
 
   </form>
 
-  <!-- Register Link -->
+  <!-- Register Navigation Link -->
   <p class="auth-switch">
     Don't have an account?
-    <a routerLink="/auth/register" class="link">
+    <a routerLink="/register" class="link">
       Create one
     </a>
   </p>

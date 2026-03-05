@@ -1,0 +1,159 @@
+<div class="page-enter">
+  <div class="page-header">
+    <h1 class="page-title">Profile</h1>
+    <p class="page-subtitle">Manage your account settings</p>
+  </div>
+
+  <!-- Loading skeleton -->
+  <div
+    *ngIf="loading"
+    class="skeleton"
+    style="height: 300px; border-radius: 18px"
+  ></div>
+
+  <!-- Profile content -->
+  <div *ngIf="!loading && account" class="profile-grid">
+
+    <!-- Left: Identity Card -->
+    <div class="identity-card">
+      <div class="avatar-ring">
+        <div class="avatar-big">{{ initials }}</div>
+      </div>
+      <h2 class="profile-name">{{ account.fullName }}</h2>
+      <p class="profile-email">{{ account.email }}</p>
+      <div class="acct-badge">{{ account.accountNumber }}</div>
+      <div class="profile-stats">
+        <div class="pstat">
+          <span class="pstat-val"
+            >{{ account.currency }}
+            {{ account.balance | number: "1.2-2" }}</span
+          >
+          <span class="pstat-label">Balance</span>
+        </div>
+        <div class="pstat">
+          <span class="pstat-val">{{ account.accountStatus }}</span>
+          <span class="pstat-label">Status</span>
+        </div>
+        <div class="pstat">
+          <span class="pstat-val">{{ account.bankCards?.length || 0 }}</span>
+          <span class="pstat-label">Cards</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Edit Forms -->
+    <div class="profile-forms">
+      <!-- Profile Info -->
+      <div class="form-section card">
+        <h3 class="form-section-title">Personal Information</h3>
+        <div *ngIf="profileSuccess" class="success-alert">
+          {{ profileSuccess }}
+        </div>
+        <div *ngIf="profileError" class="error-alert">{{ profileError }}</div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="profileForm.fullName"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input
+              type="tel"
+              class="form-control"
+              [(ngModel)]="profileForm.phoneNumber"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            [value]="account.email"
+            disabled
+          />
+          <span class="form-hint">Email cannot be changed</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Member Since</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="account.createdAt | date: 'MMMM d, y'"
+            disabled
+          />
+        </div>
+        <button
+          class="btn btn-primary"
+          (click)="saveProfile()"
+          [disabled]="profileLoading"
+        >
+          <span *ngIf="profileLoading" class="spinner"></span> Save Changes
+        </button>
+      </div>
+
+      <!-- Change Password -->
+      <div class="form-section card">
+        <h3 class="form-section-title">Change Password</h3>
+        <div *ngIf="pwSuccess" class="success-alert">{{ pwSuccess }}</div>
+        <div *ngIf="pwError" class="error-alert">{{ pwError }}</div>
+
+        <div class="form-group">
+          <label class="form-label">Current Password</label>
+          <input
+            type="password"
+            class="form-control"
+            [(ngModel)]="pwForm.currentPassword"
+          />
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input
+              type="password"
+              class="form-control"
+              [(ngModel)]="pwForm.newPassword"
+              placeholder="Min. 8 chars"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm New</label>
+            <input
+              type="password"
+              class="form-control"
+              [(ngModel)]="pwForm.confirm"
+            />
+          </div>
+        </div>
+        <button
+          class="btn btn-ghost"
+          (click)="changePassword()"
+          [disabled]="pwLoading"
+        >
+          <span *ngIf="pwLoading" class="spinner"></span> Update Password
+        </button>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="form-section card danger-zone">
+        <h3 class="form-section-title" style="color: var(--red)">
+          ⚠ Danger Zone
+        </h3>
+        <div class="danger-row">
+          <div>
+            <p class="danger-title">Sign out of all devices</p>
+            <p class="danger-desc">Revoke all active sessions</p>
+          </div>
+          <button class="btn btn-danger btn-sm" (click)="auth.logout()">
+            Log Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

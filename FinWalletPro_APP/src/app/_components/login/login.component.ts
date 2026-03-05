@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/_services/AuthService';
 })
 export class LoginComponent {
 
+  // Form group
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -26,6 +27,7 @@ export class LoginComponent {
     private router: Router
   ) {}
 
+  // Submit
   onSubmit(): void {
     this.submitted = true;
 
@@ -34,6 +36,7 @@ export class LoginComponent {
     this.loading = true;
     this.error = '';
 
+    // Login logic
     this.auth.login(this.form.value as any).subscribe({
       next: () => {
         this.loading = false;
