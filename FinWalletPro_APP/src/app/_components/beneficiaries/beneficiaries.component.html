@@ -1,33 +1,51 @@
 <div class="page-enter">
   <div class="page-header">
     <div>
+      <!-- Topic & Sub topic-->
       <h1 class="page-title">Beneficiaries</h1>
       <p class="page-subtitle">Manage your saved recipients</p>
     </div>
-    <button class="btn btn-primary" (click)="openAdd()">+ Add Beneficiary</button>
+    <!-- Add Beneficiary button -->
+    <button class="btn btn-primary" (click)="openAdd()">
+      + Add Beneficiary
+    </button>
   </div>
 
   <!-- Loading Skeleton -->
   <div *ngIf="loading" class="ben-grid">
-    <div *ngFor="let n of [1,2,3,4]" class="card skeleton-card">
-      <div class="skeleton" style="width:52px;height:52px;border-radius:50%"></div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-        <div class="skeleton" style="width:60%;height:16px"></div>
-        <div class="skeleton" style="width:40%;height:12px"></div>
+    <div *ngFor="let n of [1, 2, 3, 4]" class="card skeleton-card">
+      <div
+        class="skeleton"
+        style="width: 52px; height: 52px; border-radius: 50%"
+      ></div>
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+        <div class="skeleton" style="width: 60%; height: 16px"></div>
+        <div class="skeleton" style="width: 40%; height: 12px"></div>
       </div>
     </div>
   </div>
 
   <!-- Empty State -->
   <div *ngIf="!loading && beneficiaries.length === 0" class="empty-state-box">
-    <div style="font-size:3rem;margin-bottom:12px">👥</div>
-    <p style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:8px">
+    <div style="font-size: 3rem; margin-bottom: 12px">👥</div>
+    <p
+      style="
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      "
+    >
       No beneficiaries yet
     </p>
-    <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:20px">
+    <p
+      style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 20px"
+    >
       Add recipients for quick money transfers
     </p>
-    <button class="btn btn-primary" (click)="openAdd()">Add First Beneficiary</button>
+    <button class="btn btn-primary" (click)="openAdd()">
+      Add First Beneficiary
+    </button>
   </div>
 
   <!-- Beneficiaries List -->
@@ -40,11 +58,28 @@
         <p class="ben-acct mono">{{ b.beneficiaryAccountNumber }}</p>
         <p class="ben-bank" *ngIf="b.bankName">{{ b.bankName }}</p>
       </div>
+
+      <!-- Send button logic -->
       <div class="ben-actions">
-        <a [routerLink]="['/transfer']" [queryParams]="{to: b.beneficiaryAccountNumber}"
-           class="btn btn-success btn-sm">↑ Send</a>
+        <a
+          [routerLink]="['/transfer']"
+          [queryParams]="{ to: b.beneficiaryAccountNumber }"
+          class="btn btn-success btn-sm"
+          >↑ Send</a
+        >
+
+        <!-- Edit button logic -->
         <button class="btn-icon" (click)="editBen(b)" title="Edit">✎</button>
-        <button class="btn-icon" style="color:var(--red)" (click)="confirmDelete(b)" title="Remove">🗑</button>
+
+        <!-- Delete button logic -->
+        <button
+          class="btn-icon"
+          style="color: var(--red)"
+          (click)="confirmDelete(b)"
+          title="Remove"
+        >
+          🗑
+        </button>
       </div>
     </div>
   </div>
@@ -52,45 +87,77 @@
   <!-- Add / Edit Modal -->
   <div *ngIf="modal" class="modal-overlay" (click)="closeModal()">
     <div class="modal" (click)="$event.stopPropagation()">
-      <h3 class="modal-title">{{ editingId ? 'Edit' : 'Add' }} Beneficiary</h3>
+      <h3 class="modal-title">{{ editingId ? "Edit" : "Add" }} Beneficiary</h3>
       <div *ngIf="modalError" class="error-alert">{{ modalError }}</div>
 
       <div class="form-group">
         <label class="form-label">Full Name *</label>
-        <input type="text" class="form-control" [(ngModel)]="form.beneficiaryName" placeholder="John Doe">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="form.beneficiaryName"
+          placeholder="John Doe"
+        />
       </div>
 
       <div class="form-group">
         <label class="form-label">Account Number *</label>
-        <input type="text" class="form-control" [(ngModel)]="form.beneficiaryAccountNumber"
-               placeholder="FWP20240101xxxx" [disabled]="!!editingId">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="form.beneficiaryAccountNumber"
+          placeholder="FWP20240101xxxx"
+          [disabled]="!!editingId"
+        />
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Nickname</label>
-          <input type="text" class="form-control" [(ngModel)]="form.nickName" placeholder="e.g. Mom">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="form.nickName"
+            placeholder="e.g. Mom"
+          />
         </div>
         <div class="form-group">
           <label class="form-label">Bank Name</label>
-          <input type="text" class="form-control" [(ngModel)]="form.bankName" placeholder="e.g. FinWallet">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="form.bankName"
+            placeholder="e.g. FinWallet"
+          />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control" [(ngModel)]="form.beneficiaryEmail">
+          <input
+            type="email"
+            class="form-control"
+            [(ngModel)]="form.beneficiaryEmail"
+          />
         </div>
         <div class="form-group">
           <label class="form-label">Phone</label>
-          <input type="tel" class="form-control" [(ngModel)]="form.beneficiaryPhone">
+          <input
+            type="tel"
+            class="form-control"
+            [(ngModel)]="form.beneficiaryPhone"
+          />
         </div>
       </div>
 
       <div class="modal-actions">
         <button class="btn btn-ghost" (click)="closeModal()">Cancel</button>
-        <button class="btn btn-primary" (click)="save()" [disabled]="modalLoading">
+        <button
+          class="btn btn-primary"
+          (click)="save()"
+          [disabled]="modalLoading"
+        >
           <span *ngIf="modalLoading" class="spinner"></span> Save
         </button>
       </div>
@@ -99,13 +166,27 @@
 
   <!-- Delete Confirm Modal -->
   <div *ngIf="deleteTarget" class="modal-overlay" (click)="deleteTarget = null">
-    <div class="modal" (click)="$event.stopPropagation()" style="max-width:360px">
+    <div
+      class="modal"
+      (click)="$event.stopPropagation()"
+      style="max-width: 360px"
+    >
       <h3 class="modal-title">Remove Beneficiary?</h3>
-      <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:20px">
-        Are you sure you want to remove <strong>{{ deleteTarget.beneficiaryName }}</strong>?
+      <p
+        style="
+          font-size: 0.875rem;
+          color: var(--text-muted);
+          margin-bottom: 20px;
+        "
+      >
+        Are you sure you want to remove
+        <strong>{{ deleteTarget.beneficiaryName }}</strong
+        >?
       </p>
       <div class="modal-actions">
-        <button class="btn btn-ghost" (click)="deleteTarget = null">Cancel</button>
+        <button class="btn btn-ghost" (click)="deleteTarget = null">
+          Cancel
+        </button>
         <button class="btn btn-danger" (click)="doDelete()">
           <span *ngIf="deleteLoading" class="spinner"></span> Remove
         </button>

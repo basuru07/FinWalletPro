@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   depositAmount = 0;
   depositNote = '';
 
+  // Quick action array
   quickActions = [
     { label: 'Send Money', route: '/transfer', icon: '↑' },
     { label: 'History', route: '/transactions', icon: '↔' },
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
     this.loadDashboard();
   }
 
+  // Dashboard section
   loadDashboard(): void {
 
     this.accountSvc.getMyAccount().subscribe({
@@ -79,13 +81,14 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  // Automatic time of Day
   timeOfDay(): string {
     const h = new Date().getHours();
     if (h < 12) return 'morning';
     if (h < 17) return 'afternoon';
     return 'evening';
   }
-
+// First name
   firstName(): string {
     return this.account?.fullName?.split(' ')[0] ?? '';
   }

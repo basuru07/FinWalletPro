@@ -1,35 +1,39 @@
 <div class="page-enter">
-
   <!-- BACK LINK -->
   <div class="back-link">
-    <a routerLink="/transactions" class="btn btn-ghost btn-sm">← Back to History</a>
+    <a routerLink="/transactions" class="btn btn-ghost btn-sm"
+      >← Back to History</a
+    >
   </div>
 
   <!-- LOADING SKELETON -->
   <div *ngIf="loading" class="detail-skeleton">
-    <div class="skeleton" style="height: 180px; border-radius: 18px; margin-bottom: 20px"></div>
+    <div
+      class="skeleton"
+      style="height: 180px; border-radius: 18px; margin-bottom: 20px"
+    ></div>
     <div class="skeleton" style="height: 300px; border-radius: 18px"></div>
   </div>
 
   <!-- TRANSACTION DETAILS -->
   <ng-container *ngIf="!loading && tx">
-
     <!-- HERO CARD -->
     <div class="hero-card" [class]="heroClass()">
       <div class="hero-icon">{{ heroIcon() }}</div>
       <div class="hero-amount">
         <span class="hero-currency">{{ tx.currency }}</span>
-        <span class="hero-value">{{ tx.amount | number:'1.2-2' }}</span>
+        <span class="hero-value">{{ tx.amount | number: "1.2-2" }}</span>
       </div>
       <div class="hero-type">{{ tx.transactionType }}</div>
-      <span class="badge hero-status" [class]="badgeClass(tx.status)">{{ tx.status }}</span>
+      <span class="badge hero-status" [class]="badgeClass(tx.status)">{{
+        tx.status
+      }}</span>
     </div>
 
     <!-- DETAILS -->
     <div class="detail-card card">
       <h2 class="detail-section-title">Transaction Details</h2>
       <div class="detail-rows">
-
         <div class="detail-row">
           <span class="detail-key">Reference</span>
           <span class="detail-val mono">{{ tx.transactionReference }}</span>
@@ -37,13 +41,15 @@
 
         <div class="detail-row">
           <span class="detail-key">Date & Time</span>
-          <span class="detail-val">{{ tx.transactionDate | date:'MMMM d, y – h:mm:ss a' }}</span>
+          <span class="detail-val">{{
+            tx.transactionDate | date: "MMMM d, y – h:mm:ss a"
+          }}</span>
         </div>
 
         <div class="detail-row">
           <span class="detail-key">From</span>
           <span class="detail-val">
-            {{ tx.senderName || '—' }}
+            {{ tx.senderName || "—" }}
             <span class="mono dim">{{ tx.senderAccountNumber }}</span>
           </span>
         </div>
@@ -51,73 +57,96 @@
         <div class="detail-row">
           <span class="detail-key">To</span>
           <span class="detail-val">
-            {{ tx.receiverName || '—' }}
+            {{ tx.receiverName || "—" }}
             <span class="mono dim">{{ tx.receiverAccountNumber }}</span>
           </span>
         </div>
 
         <div class="detail-row">
           <span class="detail-key">Description</span>
-          <span class="detail-val">{{ tx.description || '—' }}</span>
+          <span class="detail-val">{{ tx.description || "—" }}</span>
         </div>
 
         <div class="detail-row">
           <span class="detail-key">Category</span>
-          <span class="detail-val">{{ tx.category || '—' }}</span>
+          <span class="detail-val">{{ tx.category || "—" }}</span>
         </div>
 
         <hr class="divider" />
 
         <div class="detail-row">
           <span class="detail-key">Amount</span>
-          <span class="detail-val bold">{{ tx.currency }} {{ tx.amount | number:'1.2-2' }}</span>
+          <span class="detail-val bold"
+            >{{ tx.currency }} {{ tx.amount | number: "1.2-2" }}</span
+          >
         </div>
 
         <div class="detail-row">
           <span class="detail-key">Fee</span>
           <span class="detail-val" [class.dim]="tx.fee === 0">
-            {{ tx.fee === 0 ? 'Free' : tx.currency + ' ' + (tx.fee | number:'1.2-2') }}
+            {{
+              tx.fee === 0
+                ? "Free"
+                : tx.currency + " " + (tx.fee | number: "1.2-2")
+            }}
           </span>
         </div>
 
         <div class="detail-row total-row">
           <span class="detail-key">Total</span>
-          <span class="detail-val bold gold">{{ tx.currency }} {{ tx.totalAmount | number:'1.2-2' }}</span>
+          <span class="detail-val bold gold"
+            >{{ tx.currency }} {{ tx.totalAmount | number: "1.2-2" }}</span
+          >
         </div>
 
         <div class="detail-row">
           <span class="detail-key">Balance After</span>
-          <span class="detail-val">{{ tx.currency }} {{ tx.balanceAfter | number:'1.2-2' }}</span>
+          <span class="detail-val"
+            >{{ tx.currency }} {{ tx.balanceAfter | number: "1.2-2" }}</span
+          >
         </div>
-
       </div>
     </div>
 
     <!-- ACTIONS -->
-    <div *ngIf="tx.status === 'Completed' && tx.transactionType === 'Transfer'" class="actions-bar">
-      <button class="btn btn-danger" (click)="openReverse()">⟳ Request Reversal</button>
+    <div
+      *ngIf="tx.status === 'Completed' && tx.transactionType === 'Transfer'"
+      class="actions-bar"
+    >
+      <button class="btn btn-danger" (click)="openReverse()">
+        ⟳ Request Reversal
+      </button>
     </div>
-
   </ng-container>
 
   <!-- REVERSAL MODAL -->
   <div *ngIf="reverseModal" class="modal-overlay" (click)="closeReverse()">
     <div class="modal" (click)="$event.stopPropagation()">
       <h3 class="modal-title">Request Reversal</h3>
-      <p class="modal-desc">Please provide a reason for reversing this transaction.</p>
+      <p class="modal-desc">
+        Please provide a reason for reversing this transaction.
+      </p>
 
       <div class="form-group">
-        <textarea class="form-control" rows="3" [(ngModel)]="reverseReason" placeholder="Reason for reversal…"></textarea>
+        <textarea
+          class="form-control"
+          rows="3"
+          [(ngModel)]="reverseReason"
+          placeholder="Reason for reversal…"
+        ></textarea>
       </div>
 
       <div class="modal-actions">
         <button class="btn btn-ghost" (click)="closeReverse()">Cancel</button>
-        <button class="btn btn-danger" (click)="doReverse()" [disabled]="!reverseReason">
+        <button
+          class="btn btn-danger"
+          (click)="doReverse()"
+          [disabled]="!reverseReason"
+        >
           <span *ngIf="reverseLoading" class="spinner"></span>
           Reverse
         </button>
       </div>
     </div>
   </div>
-
 </div>

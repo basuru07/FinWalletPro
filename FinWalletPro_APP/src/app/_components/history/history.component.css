@@ -1,96 +1,45 @@
-/* ===============================
-   Page Header
-================================ */
-.page-header {
-  margin-bottom: 24px;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-.page-title {
-  font-size: 24px;
-  font-weight: 600;
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
-.page-subtitle {
-  font-size: 14px;
-  color: #6b7280;
-  margin-top: 4px;
+body,
+:host {
+  font-family: "Inter", sans-serif;
+  background: #f4f6fb;
+  color: #1a1d2e;
 }
 
-
-/* ===============================
-   Filters Bar
-================================ */
-.filters-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: flex-end;
-  margin-bottom: 24px;
-  padding: 16px;
-  background: #f9fafb;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-label {
-  font-size: 12px;
-  margin-bottom: 4px;
-  color: #6b7280;
-}
-
-.filter-select {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
-  min-width: 140px;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: #2563eb;
-}
-
-
-/* ===============================
-   Transaction Table
-================================ */
+/* ── Table ── */
 .tx-table {
-  background: #ffffff;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  background: #fff;
+  border: 1px solid #e8ecf4;
+  border-radius: 14px;
   overflow: hidden;
 }
 
+/* ── Row ── */
 .tx-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   padding: 14px 18px;
+  border-bottom: 1px solid #f0f2f8;
   text-decoration: none;
   color: inherit;
-  border-bottom: 1px solid #f1f5f9;
-  transition: background 0.2s ease;
+  transition: background 0.15s ease;
 }
-
-.tx-row:hover {
-  background: #f8fafc;
-}
-
 .tx-row:last-child {
   border-bottom: none;
 }
+.tx-row:hover {
+  background: #f8f9fd;
+}
 
-
-/* ===============================
-   Icon
-================================ */
+/* ── Icon ── */
 .tx-icon {
   width: 40px;
   height: 40px;
@@ -98,216 +47,193 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  background: #eef0fd;
+  color: #667eea;
+}
+.tx-icon.credit {
+  background: #f0fdf4;
+  color: #22c55e;
+}
+.tx-icon.debit {
+  background: #fef2f2;
+  color: #ef4444;
+}
+.tx-icon.pending {
+  background: #fffbeb;
+  color: #f59e0b;
 }
 
-/* Icon Variants */
-.dep {
-  background: #dcfce7;
-  color: #16a34a;
-}
-
-.with {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-.recv {
-  background: #dbeafe;
-  color: #2563eb;
-}
-
-.send {
-  background: #fef3c7;
-  color: #d97706;
-}
-
-
-/* ===============================
-   Details
-================================ */
+/* ── Details ── */
 .tx-details {
   flex: 1;
+  min-width: 0;
 }
 
 .tx-main {
   display: flex;
-  gap: 10px;
-  font-weight: 500;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
 .tx-peer {
-  font-size: 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1a1d2e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tx-ref {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 0.72rem;
+  color: #b0b8cc;
+  white-space: nowrap;
 }
 
 .tx-sub {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #8b92a9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
-/* ===============================
-   Right Section
-================================ */
+/* ── Right ── */
 .tx-right {
-  text-align: right;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
 }
 
 .tx-amt {
-  font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
-
 .tx-amt.pos {
-  color: #16a34a;
+  color: #22c55e;
 }
-
 .tx-amt.neg {
-  color: #dc2626;
+  color: #ef4444;
 }
 
-
-/* ===============================
-   Badges
-================================ */
+/* ── Badge ── */
 .badge {
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-weight: 500;
-  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: capitalize;
 }
-
-.badge-success {
-  background: #dcfce7;
+.badge.success,
+.badge.completed {
+  background: #f0fdf4;
   color: #16a34a;
 }
-
-.badge-warning {
-  background: #fef3c7;
+.badge.pending {
+  background: #fffbeb;
   color: #d97706;
 }
-
-.badge-danger {
-  background: #fee2e2;
+.badge.failed {
+  background: #fef2f2;
   color: #dc2626;
 }
 
-.badge-muted {
-  background: #e5e7eb;
-  color: #6b7280;
+/* ── Empty State ── */
+.empty-state-box {
+  text-align: center;
+  padding: 60px 32px;
+  border: 2px dashed #d1d9ef;
+  border-radius: 14px;
+  background: #fff;
 }
 
+/* ── Skeleton ── */
+.skeleton-row {
+  cursor: default;
+  pointer-events: none;
+}
 
-/* ===============================
-   Pagination
-================================ */
+.skeleton {
+  background: linear-gradient(90deg, #f0f2f8 25%, #e4e7f0 50%, #f0f2f8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Pagination ── */
 .pagination {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 14px;
   margin-top: 20px;
 }
 
 .page-info {
-  font-size: 14px;
+  font-size: 0.82rem;
+  color: #8b92a9;
   font-weight: 500;
 }
 
-
-/* ===============================
-   Buttons
-================================ */
+/* ── Buttons ── */
 .btn {
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
   border: none;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    background 0.15s;
+}
+.btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .btn-ghost {
-  background: transparent;
-  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #6b7280;
+  border: 1px solid #e8ecf4;
 }
-
 .btn-ghost:hover {
-  background: #f3f4f6;
+  background: #f4f6fb;
+  color: #1a1d2e;
 }
 
 .btn-sm {
-  font-size: 12px;
-  padding: 4px 10px;
+  padding: 6px 13px;
+  font-size: 0.78rem;
 }
 
-
-/* ===============================
-   Empty State
-================================ */
-.empty-state-box {
-  text-align: center;
-  padding: 40px;
-  border: 1px dashed #e5e7eb;
-  border-radius: 10px;
-  background: #fafafa;
-}
-
-
-/* ===============================
-   Skeleton Loader
-================================ */
-.skeleton-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 18px;
-}
-
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    #f3f4f6 25%,
-    #e5e7eb 37%,
-    #f3f4f6 63%
-  );
-  background-size: 400% 100%;
-  animation: shimmer 1.4s ease infinite;
-  border-radius: 6px;
-}
-
-@keyframes shimmer {
-  0% { background-position: 100% 0 }
-  100% { background-position: -100% 0 }
-}
-
-
-/* ===============================
-   Responsive
-================================ */
-@media (max-width: 768px) {
-  .filters-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
+/* ── Responsive ── */
+@media (max-width: 600px) {
   .tx-row {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 12px 14px;
+    gap: 10px;
   }
-
-  .tx-right {
-    text-align: left;
-    width: 100%;
+  .tx-ref {
+    display: none;
+  }
+  .tx-sub {
+    font-size: 0.7rem;
   }
 }

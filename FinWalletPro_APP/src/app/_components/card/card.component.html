@@ -9,16 +9,31 @@
 
   <!-- Loading skeletons -->
   <div *ngIf="loading" class="cards-grid">
-    <div class="skeleton" style="height:180px;border-radius:18px"></div>
-    <div class="skeleton" style="height:180px;border-radius:18px"></div>
+    <div class="skeleton" style="height: 180px; border-radius: 18px"></div>
+    <div class="skeleton" style="height: 180px; border-radius: 18px"></div>
   </div>
 
   <!-- Empty state -->
   <div *ngIf="!loading && cards.length === 0" class="empty-box">
-    <div style="font-size:3rem;margin-bottom:12px">💳</div>
-    <p style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:6px">No cards linked</p>
-    <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:20px">Link a card to enable deposits and withdrawals</p>
-    <button class="btn btn-primary" (click)="openAdd()">Link Your First Card</button>
+    <div style="font-size: 3rem; margin-bottom: 12px">💳</div>
+    <p
+      style="
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+      "
+    >
+      No cards linked
+    </p>
+    <p
+      style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 20px"
+    >
+      Link a card to enable deposits and withdrawals
+    </p>
+    <button class="btn btn-primary" (click)="openAdd()">
+      Link Your First Card
+    </button>
   </div>
 
   <!-- Cards grid -->
@@ -32,7 +47,7 @@
           <p class="card-label">Card Holder</p>
           <p class="card-val">{{ card.cardHolderName }}</p>
         </div>
-        <div style="text-align:right">
+        <div style="text-align: right">
           <p class="card-label">Expires</p>
           <p class="card-val">{{ card.expiryMonth }}/{{ card.expiryYear }}</p>
         </div>
@@ -43,10 +58,16 @@
         <span *ngIf="card.bankName">· {{ card.bankName }}</span>
       </div>
       <div class="card-actions">
-        <button *ngIf="!card.isDefault" class="card-action-btn" (click)="setDefault(card.cardId)">
+        <button
+          *ngIf="!card.isDefault"
+          class="card-action-btn"
+          (click)="setDefault(card.cardId)"
+        >
           Set Default
         </button>
-        <button class="card-action-btn danger" (click)="deleteTarget = card">Remove</button>
+        <button class="card-action-btn danger" (click)="deleteTarget = card">
+          Remove
+        </button>
       </div>
     </div>
   </div>
@@ -59,12 +80,22 @@
 
       <div class="form-group">
         <label class="form-label">Card Holder Name *</label>
-        <input type="text" class="form-control" [(ngModel)]="form.cardHolderName" placeholder="As on card">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="form.cardHolderName"
+          placeholder="As on card"
+        />
       </div>
       <div class="form-group">
         <label class="form-label">Card Number *</label>
-        <input type="text" class="form-control" [(ngModel)]="form.cardNumber"
-               placeholder="1234 5678 9012 3456" maxlength="19">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="form.cardNumber"
+          placeholder="1234 5678 9012 3456"
+          maxlength="19"
+        />
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -100,11 +131,20 @@
       </div>
       <div class="form-group">
         <label class="form-label">Bank Name</label>
-        <input type="text" class="form-control" [(ngModel)]="form.bankName" placeholder="Optional">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="form.bankName"
+          placeholder="Optional"
+        />
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" (click)="modal = false">Cancel</button>
-        <button class="btn btn-primary" (click)="addCard()" [disabled]="modalLoading">
+        <button
+          class="btn btn-primary"
+          (click)="addCard()"
+          [disabled]="modalLoading"
+        >
           <span *ngIf="modalLoading" class="spinner"></span> Link Card
         </button>
       </div>
@@ -115,12 +155,26 @@
   <div *ngIf="deleteTarget" class="modal-overlay" (click)="deleteTarget = null">
     <div class="modal small" (click)="$event.stopPropagation()">
       <h3 class="modal-title">Remove Card?</h3>
-      <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:20px">
-        Remove card ending in <strong>{{ deleteTarget.cardNumberMasked.slice(-4) }}</strong>?
+      <p
+        style="
+          font-size: 0.875rem;
+          color: var(--text-muted);
+          margin-bottom: 20px;
+        "
+      >
+        Remove card ending in
+        <strong>{{ deleteTarget.cardNumberMasked.slice(-4) }}</strong
+        >?
       </p>
       <div class="modal-actions">
-        <button class="btn btn-ghost" (click)="deleteTarget = null">Cancel</button>
-        <button class="btn btn-danger" (click)="removeCard()" [disabled]="deleteLoading">
+        <button class="btn btn-ghost" (click)="deleteTarget = null">
+          Cancel
+        </button>
+        <button
+          class="btn btn-danger"
+          (click)="removeCard()"
+          [disabled]="deleteLoading"
+        >
           <span *ngIf="deleteLoading" class="spinner"></span> Remove
         </button>
       </div>

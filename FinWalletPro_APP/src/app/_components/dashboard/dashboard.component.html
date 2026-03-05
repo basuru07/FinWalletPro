@@ -1,24 +1,19 @@
 <div class="page-enter">
-
   <!-- Greeting -->
   <div class="greeting">
     <div>
       <h1 class="greeting-title">
         Good {{ timeOfDay() }}, {{ firstName() }} 👋
       </h1>
-      <p class="greeting-sub">
-        Here's your financial overview for today
-      </p>
+      <p class="greeting-sub">Here's your financial overview for today</p>
     </div>
 
-    <a routerLink="/transfer" class="btn btn-primary">
-      ↑ Send Money
-    </a>
+    <!-- Send money button -->
+    <a routerLink="/transfer" class="btn btn-primary"> ↑ Send Money </a>
   </div>
 
   <!-- Balance Section -->
   <div class="balance-grid">
-
     <!-- Main Balance Card -->
     <div class="balance-hero">
       <div class="balance-header">
@@ -26,44 +21,43 @@
         <span class="acct-num">{{ account?.accountNumber }}</span>
       </div>
 
+      <!-- account balance -->
       <div class="balance-main">
         <span class="currency">{{ account?.currency }}</span>
         <span class="amount">
-          {{ account?.balance | number:'1.2-2' }}
+          {{ account?.balance | number: "1.2-2" }}
         </span>
       </div>
-
+      <!-- send button -->
       <div class="balance-actions">
-        <a routerLink="/transfer" class="bal-action-btn">
-          ↑ Send
-        </a>
+        <a routerLink="/transfer" class="bal-action-btn"> ↑ Send </a>
+        <!-- deposit button -->
         <button class="bal-action-btn" (click)="showDeposit()">
           ↓ Deposit
         </button>
       </div>
     </div>
 
-    <!-- Stats -->
+    <!-- Stats - send this month -->
     <div class="stat-card">
       <span class="stat-icon sent">↑</span>
       <div>
         <p class="stat-label">Sent This Month</p>
-        <p class="stat-value negative">
-          -{{ totalSent | number:'1.2-2' }}
-        </p>
+        <p class="stat-value negative">-{{ totalSent | number: "1.2-2" }}</p>
       </div>
     </div>
 
+    <!-- Stats - received this month -->
     <div class="stat-card">
       <span class="stat-icon recv">↓</span>
       <div>
         <p class="stat-label">Received This Month</p>
         <p class="stat-value positive">
-          +{{ totalReceived | number:'1.2-2' }}
+          +{{ totalReceived | number: "1.2-2" }}
         </p>
       </div>
     </div>
-
+    <!-- Stats - linked cards -->
     <div class="stat-card">
       <span class="stat-icon cards">💳</span>
       <div>
@@ -73,7 +67,6 @@
         </p>
       </div>
     </div>
-
   </div>
 
   <!-- Quick Actions -->
@@ -82,23 +75,21 @@
   </div>
 
   <div class="quick-actions">
-    <a *ngFor="let a of quickActions"
-       [routerLink]="a.route"
-       class="qa-card">
+    <a *ngFor="let a of quickActions" [routerLink]="a.route" class="qa-card">
       <span class="qa-icon">{{ a.icon }}</span>
       <span class="qa-label">{{ a.label }}</span>
     </a>
   </div>
 
   <!-- Recent Transactions -->
-  <div class="section-header" style="margin-top:32px">
+  <div class="section-header" style="margin-top: 32px">
     <h2 class="section-title">Recent Transactions</h2>
     <a routerLink="/transactions" class="view-all">View all →</a>
   </div>
 
   <!-- Loading -->
   <div *ngIf="txLoading" class="tx-list">
-    <div class="tx-skeleton" *ngFor="let i of [1,2,3,4,5]">
+    <div class="tx-skeleton" *ngFor="let i of [1, 2, 3, 4, 5]">
       <div class="skeleton circle"></div>
       <div class="skeleton-lines">
         <div class="skeleton line short"></div>
@@ -117,29 +108,30 @@
 
   <!-- Transactions -->
   <div *ngIf="!txLoading && recentTx.length > 0" class="tx-list">
-    <a *ngFor="let tx of recentTx"
-       [routerLink]="['/transactions', tx.transactionId]"
-       class="tx-row">
-
+    <a
+      *ngFor="let tx of recentTx"
+      [routerLink]="['/transactions', tx.transactionId]"
+      class="tx-row"
+    >
       <div class="tx-info">
         <span class="tx-name">{{ txCounterparty(tx) }}</span>
         <span class="tx-meta">
           {{ tx.transactionType }} ·
-          {{ tx.transactionDate | date:'MMM d, h:mm a' }}
+          {{ tx.transactionDate | date: "MMM d, h:mm a" }}
         </span>
       </div>
 
-      <span class="tx-amount"
-            [class.positive]="isCredited(tx)"
-            [class.negative]="!isCredited(tx)">
-        {{ isCredited(tx) ? '+' : '-' }}
+      <span
+        class="tx-amount"
+        [class.positive]="isCredited(tx)"
+        [class.negative]="!isCredited(tx)"
+      >
+        {{ isCredited(tx) ? "+" : "-" }}
         {{ account?.currency }}
-        {{ tx.amount | number:'1.2-2' }}
+        {{ tx.amount | number: "1.2-2" }}
       </span>
-
     </a>
   </div>
-
 </div>
 
 <!-- Deposit Modal -->
@@ -149,28 +141,30 @@
 
     <div class="form-group">
       <label>Amount ({{ account?.currency }})</label>
-      <input type="number"
-             [(ngModel)]="depositAmount"
-             class="form-control"
-             placeholder="0.00">
+      <input
+        type="number"
+        [(ngModel)]="depositAmount"
+        class="form-control"
+        placeholder="0.00"
+      />
     </div>
 
     <div class="form-group">
       <label>Description</label>
-      <input type="text"
-             [(ngModel)]="depositNote"
-             class="form-control"
-             placeholder="Deposit note">
+      <input
+        type="text"
+        [(ngModel)]="depositNote"
+        class="form-control"
+        placeholder="Deposit note"
+      />
     </div>
 
     <div class="modal-actions">
-      <button class="btn btn-ghost"
-              (click)="depositModal=false">
+      <button class="btn btn-ghost" (click)="depositModal = false">
         Cancel
       </button>
 
-      <button class="btn btn-success"
-              (click)="doDeposit()">
+      <button class="btn btn-success" (click)="doDeposit()">
         <span *ngIf="depositLoading" class="spinner"></span>
         <span *ngIf="!depositLoading">Deposit</span>
       </button>

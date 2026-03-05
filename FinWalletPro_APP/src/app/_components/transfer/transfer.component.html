@@ -9,22 +9,21 @@
   </div>
 
   <ng-container *ngIf="!success; else successTemplate">
-
     <div class="transfer-grid">
-
       <!-- Form -->
       <div class="transfer-form card-elevated">
-
         <div *ngIf="error" class="error-alert">{{ error }}</div>
 
         <!-- Beneficiaries Quick Pick -->
         <div *ngIf="beneficiaries.length > 0" class="quick-bens">
           <p class="quick-label">Quick Send</p>
           <div class="ben-chips">
-            <button *ngFor="let b of beneficiaries"
+            <button
+              *ngFor="let b of beneficiaries"
               class="ben-chip"
               [class.selected]="selectedBen === b.beneficiaryId"
-              (click)="selectBen(b)">
+              (click)="selectBen(b)"
+            >
               <span class="ben-avatar">{{ b.beneficiaryName[0] }}</span>
               <span>{{ b.nickName || b.beneficiaryName }}</span>
             </button>
@@ -34,11 +33,17 @@
 
         <div class="form-group">
           <label class="form-label">Recipient Account Number</label>
-          <input type="text" class="form-control"
+          <input
+            type="text"
+            class="form-control"
             [(ngModel)]="form.receiverAccountNumber"
             placeholder="e.g. FWP20240101123"
-            [class.error]="submitted && !form.receiverAccountNumber"/>
-          <span *ngIf="submitted && !form.receiverAccountNumber" class="form-error">
+            [class.error]="submitted && !form.receiverAccountNumber"
+          />
+          <span
+            *ngIf="submitted && !form.receiverAccountNumber"
+            class="form-error"
+          >
             Recipient account is required
           </span>
         </div>
@@ -47,24 +52,36 @@
           <label class="form-label">Amount</label>
           <div class="amount-input-wrap">
             <span class="currency-prefix">{{ currency }}</span>
-            <input type="number" class="form-control amount-input"
-              [(ngModel)]="form.amount" placeholder="0.00"
-              min="0.01" step="0.01"
-              [class.error]="submitted && (!form.amount || form.amount <= 0)"/>
+            <input
+              type="number"
+              class="form-control amount-input"
+              [(ngModel)]="form.amount"
+              placeholder="0.00"
+              min="0.01"
+              step="0.01"
+              [class.error]="submitted && (!form.amount || form.amount <= 0)"
+            />
           </div>
           <span class="form-hint">
-            Fee: 0.5% · Total: {{ currency }} {{ totalWithFee() | number: '1.2-2' }}
+            Fee: 0.5% · Total: {{ currency }}
+            {{ totalWithFee() | number: "1.2-2" }}
           </span>
-          <span *ngIf="submitted && (!form.amount || form.amount <= 0)" class="form-error">
+          <span
+            *ngIf="submitted && (!form.amount || form.amount <= 0)"
+            class="form-error"
+          >
             Amount must be greater than 0
           </span>
         </div>
 
         <div class="form-group">
           <label class="form-label">Description (optional)</label>
-          <input type="text" class="form-control"
+          <input
+            type="text"
+            class="form-control"
             [(ngModel)]="form.description"
-            placeholder="What's this for?"/>
+            placeholder="What's this for?"
+          />
         </div>
 
         <div class="form-group">
@@ -82,12 +99,20 @@
 
         <div class="balance-info">
           <span class="balance-info-label">Available Balance</span>
-          <span class="balance-info-val">{{ currency }} {{ balance | number:'1.2-2' }}</span>
+          <span class="balance-info-val"
+            >{{ currency }} {{ balance | number: "1.2-2" }}</span
+          >
         </div>
 
-        <button class="btn btn-primary btn-block btn-lg" (click)="submit()" [disabled]="loading">
+        <button
+          class="btn btn-primary btn-block btn-lg"
+          (click)="submit()"
+          [disabled]="loading"
+        >
           <span *ngIf="loading" class="spinner"></span>
-          <span *ngIf="!loading">Send {{ currency }} {{ form.amount | number:'1.2-2' }}</span>
+          <span *ngIf="!loading"
+            >Send {{ currency }} {{ form.amount | number: "1.2-2" }}</span
+          >
         </button>
       </div>
 
@@ -100,14 +125,19 @@
               <span class="step-num">1</span>
               <div>
                 <strong>Enter details</strong>
-                <p>Provide the recipient's account number and transfer amount.</p>
+                <p>
+                  Provide the recipient's account number and transfer amount.
+                </p>
               </div>
             </div>
             <div class="step">
               <span class="step-num">2</span>
               <div>
                 <strong>Instant transfer</strong>
-                <p>Funds are transferred in real-time to any FinWalletPro account.</p>
+                <p>
+                  Funds are transferred in real-time to any FinWalletPro
+                  account.
+                </p>
               </div>
             </div>
             <div class="step">
@@ -120,14 +150,18 @@
           </div>
         </div>
         <div class="fee-card card">
-          <div class="fee-row"><span>Transfer Fee</span><span class="fee-val">0.5%</span></div>
-          <div class="fee-row"><span>Processing Time</span><span class="fee-val">Instant</span></div>
-          <div class="fee-row"><span>Daily Limit</span><span class="fee-val">Unlimited</span></div>
+          <div class="fee-row">
+            <span>Transfer Fee</span><span class="fee-val">0.5%</span>
+          </div>
+          <div class="fee-row">
+            <span>Processing Time</span><span class="fee-val">Instant</span>
+          </div>
+          <div class="fee-row">
+            <span>Daily Limit</span><span class="fee-val">Unlimited</span>
+          </div>
         </div>
       </div>
-
     </div>
-
   </ng-container>
 
   <!-- Success Template -->
@@ -143,11 +177,15 @@
         </div>
         <div class="success-row">
           <span>Amount</span>
-          <strong>{{ currency }} {{ successTx?.amount | number:'1.2-2' }}</strong>
+          <strong
+            >{{ currency }} {{ successTx?.amount | number: "1.2-2" }}</strong
+          >
         </div>
         <div class="success-row">
           <span>To</span>
-          <strong>{{ successTx?.receiverName || form.receiverAccountNumber }}</strong>
+          <strong>{{
+            successTx?.receiverName || form.receiverAccountNumber
+          }}</strong>
         </div>
       </div>
       <div class="success-actions">
@@ -156,5 +194,4 @@
       </div>
     </div>
   </ng-template>
-
 </div>
