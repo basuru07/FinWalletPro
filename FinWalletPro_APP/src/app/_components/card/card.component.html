@@ -1,0 +1,129 @@
+<div class="page-enter">
+  <div class="page-header flex justify-between items-center">
+    <div>
+      <h1 class="page-title">Bank Cards</h1>
+      <p class="page-subtitle">Manage your linked payment methods</p>
+    </div>
+    <button class="btn btn-primary" (click)="openAdd()">+ Link Card</button>
+  </div>
+
+  <!-- Loading skeletons -->
+  <div *ngIf="loading" class="cards-grid">
+    <div class="skeleton" style="height:180px;border-radius:18px"></div>
+    <div class="skeleton" style="height:180px;border-radius:18px"></div>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && cards.length === 0" class="empty-box">
+    <div style="font-size:3rem;margin-bottom:12px">💳</div>
+    <p style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:6px">No cards linked</p>
+    <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:20px">Link a card to enable deposits and withdrawals</p>
+    <button class="btn btn-primary" (click)="openAdd()">Link Your First Card</button>
+  </div>
+
+  <!-- Cards grid -->
+  <div *ngIf="!loading && cards.length > 0" class="cards-grid">
+    <div *ngFor="let card of cards" [class]="cardTheme(card)">
+      <span *ngIf="card.isDefault" class="default-badge">Default</span>
+      <div class="card-chip">◻</div>
+      <div class="card-number">{{ card.cardNumberMasked }}</div>
+      <div class="card-bottom">
+        <div>
+          <p class="card-label">Card Holder</p>
+          <p class="card-val">{{ card.cardHolderName }}</p>
+        </div>
+        <div style="text-align:right">
+          <p class="card-label">Expires</p>
+          <p class="card-val">{{ card.expiryMonth }}/{{ card.expiryYear }}</p>
+        </div>
+        <div class="card-type-logo">{{ card.cardType }}</div>
+      </div>
+      <div class="card-footer-meta">
+        <span class="card-category">{{ card.cardCategory }}</span>
+        <span *ngIf="card.bankName">· {{ card.bankName }}</span>
+      </div>
+      <div class="card-actions">
+        <button *ngIf="!card.isDefault" class="card-action-btn" (click)="setDefault(card.cardId)">
+          Set Default
+        </button>
+        <button class="card-action-btn danger" (click)="deleteTarget = card">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Card Modal -->
+  <div *ngIf="modal" class="modal-overlay" (click)="modal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Link Bank Card</h3>
+      <div *ngIf="modalError" class="error-alert">{{ modalError }}</div>
+
+      <div class="form-group">
+        <label class="form-label">Card Holder Name *</label>
+        <input type="text" class="form-control" [(ngModel)]="form.cardHolderName" placeholder="As on card">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Card Number *</label>
+        <input type="text" class="form-control" [(ngModel)]="form.cardNumber"
+               placeholder="1234 5678 9012 3456" maxlength="19">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Expiry Month *</label>
+          <select class="form-control" [(ngModel)]="form.expiryMonth">
+            <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Expiry Year *</label>
+          <select class="form-control" [(ngModel)]="form.expiryYear">
+            <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Card Type *</label>
+          <select class="form-control" [(ngModel)]="form.cardType">
+            <option>Visa</option>
+            <option>MasterCard</option>
+            <option>Amex</option>
+            <option>Discover</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category *</label>
+          <select class="form-control" [(ngModel)]="form.cardCategory">
+            <option>Debit</option>
+            <option>Credit</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bank Name</label>
+        <input type="text" class="form-control" [(ngModel)]="form.bankName" placeholder="Optional">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" (click)="modal = false">Cancel</button>
+        <button class="btn btn-primary" (click)="addCard()" [disabled]="modalLoading">
+          <span *ngIf="modalLoading" class="spinner"></span> Link Card
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div *ngIf="deleteTarget" class="modal-overlay" (click)="deleteTarget = null">
+    <div class="modal small" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Remove Card?</h3>
+      <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:20px">
+        Remove card ending in <strong>{{ deleteTarget.cardNumberMasked.slice(-4) }}</strong>?
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" (click)="deleteTarget = null">Cancel</button>
+        <button class="btn btn-danger" (click)="removeCard()" [disabled]="deleteLoading">
+          <span *ngIf="deleteLoading" class="spinner"></span> Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

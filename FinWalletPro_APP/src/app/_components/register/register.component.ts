@@ -46,7 +46,7 @@ export class RegisterComponent {
       next: () => {
         this.loading = false;
         this.success = true;
-        setTimeout(() => this.router.navigate(['auth/login']), 1500);
+        setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: err => {
         this.loading = false;

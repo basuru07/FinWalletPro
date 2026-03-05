@@ -1,4 +1,6 @@
-﻿namespace FinWalletPro_APK.FinWalletPro_Core.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FinWalletPro_APK.FinWalletPro_Core.Models
 {
     public class Account
     {
@@ -13,7 +15,9 @@
         public string AccountStatus { get; set; } = "Active"; // Active, Suspended, Closed
         public string? AccountNumber { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; }
+        
+        [Column("UPDATE_AT")]
+        public DateTime? UpdatedAt { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiry { get; set; }
 

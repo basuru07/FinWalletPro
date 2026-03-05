@@ -1,4 +1,6 @@
-﻿namespace FinWalletPro_APK.FinWalletPro_Core.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FinWalletPro_APK.FinWalletPro_Core.Models
 {
     public class Transaction
     {
@@ -16,7 +18,9 @@
         public decimal BalanceAfter { get; set; }
         public DateTime TransactionDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdateAt {  get; set; }
+        
+        //[Column("UPDATED_AT")]
+        //public DateTime? UpdateAt {  get; set; }
 
         //Navigate property to SENDER Account | Create relationship (Many Transactions → One Account) 
         public Account? SenderAccount { get; set; }

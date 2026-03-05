@@ -8,7 +8,7 @@ import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './_components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +19,13 @@ import { HistoryComponent } from './_components/history/history.component';
 import { DetailComponent } from './_components/detail/detail.component';
 import { TransferComponent } from './_components/transfer/transfer.component';
 import { BeneficiariesComponent } from './_components/beneficiaries/beneficiaries.component'; // <-- ADD THIS
+import { JwtInterceptor } from './_interceptor/jwtInterceptor';
+import { ShellComponent } from './_components/shell/shell.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { CardComponent } from './_components/card/card.component';
+import { NotificationComponent } from './_components/notification/notification.component';
+import { ProfileComponent } from './_components/profile/profile.component';
 
 registerLocaleData(en);
 
@@ -32,7 +39,13 @@ registerLocaleData(en);
     HistoryComponent,
     DetailComponent,
     TransferComponent,
-    BeneficiariesComponent
+    BeneficiariesComponent,
+    ShellComponent,
+    CardComponent,
+    NotificationComponent,
+    ProfileComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -40,10 +53,14 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-
+CommonModule,
+RouterModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

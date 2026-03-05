@@ -75,12 +75,19 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
         [HttpPost("cards")]
         public async Task<IActionResult> AddBankCard([FromBody] AddBankCardRequestDto dto)
         {
-            var accountId = GetCurrentAccountId();
+            if (string.IsNullOrWhiteSpace(dto.CardNumber))
+                return BadRequest(new { message = "Card number is required." });
 
-            // Mask and hash the card number
-            var last4 = dto.CardNumber.Replace(" ", "").Substring(dto.CardNumber.Replace(" ", "").Length - 4);
+            var cleanNumber = dto.CardNumber.Replace(" ", "");
+
+            if (cleanNumber.Length < 12)
+                return BadRequest(new { message = "Invalid card number." });
+
+            var last4 = cleanNumber.Substring(cleanNumber.Length - 4);
             var maskedNumber = $"**** **** **** {last4}";
-            var cardHash = HashCardNumber(dto.CardNumber.Replace(" ", ""));
+            var cardHash = HashCardNumber(cleanNumber);
+
+            var accountId = GetCurrentAccountId();
 
             var card = new BankCard
             {
@@ -92,10 +99,13 @@ namespace FinWalletPro_APK.FinWalletPro_API.Controllers
                 CardCategory = dto.CardCategory,
                 ExpiryMonth = dto.ExpiryMonth,
                 ExpiryYear = dto.ExpiryYear,
-                BankName = dto.BankName
+                BankName = dto.BankName,
+                LinkedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             var created = await _accountService.AddBankCardAsync(card);
+
             return StatusCode(201, new ApiResponse<BankCardDto>
             {
                 Success = true,
